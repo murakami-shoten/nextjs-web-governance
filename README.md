@@ -1,5 +1,9 @@
 # nextjs-web-governance
 
+[![License: MIT](https://img.shields.io/github/license/murakami-shoten/nextjs-web-governance)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/murakami-shoten/nextjs-web-governance)](https://github.com/murakami-shoten/nextjs-web-governance/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/murakami-shoten/nextjs-web-governance)](https://github.com/murakami-shoten/nextjs-web-governance/commits/main)
+
 Web Starter Kit の開発規約・テンプレート・品質基準。Next.js + Docker + TypeScript に特化。
 
 ## 概要
