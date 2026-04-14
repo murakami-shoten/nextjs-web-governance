@@ -87,6 +87,30 @@ curl -sL https://raw.githubusercontent.com/murakami-shoten/web-starter-kit/main/
 git submodule add https://github.com/murakami-shoten/nextjs-web-governance.git docs/governance
 ```
 
+## ⚠️ 構造変更に関する注意
+
+> **このリポジトリは複数のプロジェクトから Git サブモジュールとして参照されています。**
+> 構造的改変は参照元プロジェクトのパス参照を破壊する可能性があります。
+
+### 許可不要（通常のメンテナンス）
+
+- 既存ファイルの内容修正・追記
+- 新規ファイルの追加（既存ディレクトリ内）
+
+### 要許可（構造的改変）
+
+以下の変更を行う場合は、参照元プロジェクトへの影響を確認し、関係者の合意を得てから実施すること:
+
+- ディレクトリ名の変更（`rules/`, `requirements/`, `runbooks/`）
+- 既存ファイルの移動・リネーム・削除
+- ディレクトリ階層の変更
+
+### 参照元プロジェクト（既知）
+
+- [murakami-shoten/web-starter-kit](https://github.com/murakami-shoten/web-starter-kit) — `docs/governance/` としてサブモジュール参照
+- spec-kit 連携プロジェクト — 同じく `docs/governance/` としてサブモジュール参照
+
 ## ライセンス
 
 MIT License - 詳細は [LICENSE](LICENSE) を参照。
+
