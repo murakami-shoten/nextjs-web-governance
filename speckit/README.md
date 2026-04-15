@@ -57,9 +57,10 @@ spec-kit はデフォルトで汎用テンプレート（`spec-template.md`, `pl
 
 | テンプレート | spec-kit ワークフロー | 追加内容 | 効果 |
 |---|---|---|---|
-| `constitution-template.md` | `/speckit-constitution`（憲法策定） | Core Principles 8 項目を事前定義 | プロジェクトの最上位原則として規約が位置づけられる |
-| `spec-template.md` | `/speckit-specify`（仕様策定） | EARS 記法ガイド、非機能要件テーブル（Security/Performance/SEO/A11y） | 仕様書の作成時に品質観点が漏れなく検討される |
-| `plan-template.md` | `/speckit-plan`（実装計画） | 品質ゲート 7 項目チェックリスト、受入基準テーブル、`frontend/` レイアウト | 実装前に品質ゲート通過が計画に組み込まれる |
+| `constitution-template.md` | `/speckit-constitution`（憲法策定） | Core Principles 9 項目（Top 10 違反頻出条項含む）を事前定義 | プロジェクトの最上位原則として規約が位置づけられ、具体条項が AIのコンテキストに常駐 |
+| `spec-template.md` | `/speckit-specify`（仕様策定） | EARS 記法ガイド、非機能要件テーブル（Security/Performance/SEO/A11y）、規約ファイル直接参照指示 | 仕様書の作成時に品質観点が漏れなく検討される |
+| `plan-template.md` | `/speckit-plan`（実装計画） | Governance Compliance Plan、品質ゲート 7 項目チェックリスト、受入基準テーブル、`web/` レイアウト | AI が規約ファイルを直接読み、条項をタスクにマッピングする |
+| `checklist-template.md` | `/speckit-checklist`（品質チェック） | DEV_RULES/SECURITY_RULES/ARCHITECTURE_RULES 等の条項別チェックリスト | 実装後の規約準拠を体系的に検証 |
 
 ### テンプレート解決の仕組み
 

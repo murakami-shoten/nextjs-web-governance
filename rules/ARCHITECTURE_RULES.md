@@ -18,7 +18,7 @@
 - Next.js（App Router）を中心に
   - UI（SSR/ISR/SSG）
   - 軽量API（Route Handlers）
-  - 配置はリポジトリ直下ではなく、将来の多サービス展開を見据えて `frontend/` ディレクトリ配下に置く
+  - 配置はリポジトリ直下ではなく、将来の多サービス展開を見据えて専用のサブディレクトリ配下に置く（デフォルト推奨: `web/`、プロジェクト判断で変更可）
 - 重い処理は将来 Worker/BFF に分離できる設計を維持する
 - DB/Storage/Auth は差し替え可能な"境界"を作る（infra層）
 
@@ -95,7 +95,7 @@ function calculateInvoiceTotal(invoice: Invoice) { ... }
 Next.js App Router の特性を活かし、**Feature-First（機能ドメインごとの整理）** と **Colocation（使う場所の近くに配置）** を基本方針とする。
 
 ```
-frontend/src/
+web/src/                              # デフォルト推奨名。プロジェクト判断で変更可（例: frontend/）
 ├── app/                          # ルーティング（App Router）
 │   ├── (marketing)/              # Route Group（URL に影響しない）
 │   │   ├── page.tsx

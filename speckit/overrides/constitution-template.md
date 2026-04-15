@@ -48,7 +48,7 @@ All 7 quality gates MUST pass before any deployment. No exceptions without docum
 ### V. Docker-First Development
 Development environment MUST work with Docker alone. No host Node.js or npm required. All commands (lint, test, build, etc.) run via `docker compose run`.
 - Container configuration via `.env` (not committed) + `.env.example` (committed)
-- Next.js environment via `frontend/.env.local` + `frontend/.env.local.example`
+- Next.js environment via `web/.env.local` + `web/.env.local.example` (directory name is `web/` by default; configurable per project)
 - Port numbers chosen to avoid conflicts, configurable via settings
 <!-- Customize: Add project-specific Docker/environment notes here -->
 
@@ -76,6 +76,25 @@ UI/UX design MUST follow ISO 9241 and Nielsen's heuristics. Accessibility (WCAG 
 - Full details: `docs/governance/rules/DESIGN_RULES.md`
 <!-- Customize: Add project-specific design guidelines here -->
 
+### IX. Concrete Rules — Top Violations to Watch
+
+<!--
+  These are the governance rules MOST COMMONLY violated in AI-assisted implementations.
+  The AI agent MUST check these BEFORE writing any code.
+  For full details, ALWAYS read the source files in docs/governance/rules/.
+-->
+
+1. **NO magic numbers** — Use named constants with JSDoc (DEV_RULES §2.3)
+2. **Constants centralized** — `as const` arrays in `src/features/<domain>/constants.ts` (DEV_RULES §2.8)
+3. **Env fail-fast** — Validate required env vars at startup; crash if missing (DEV_RULES §4)
+4. **NO explicit NODE_ENV** — Never set `NODE_ENV` in `.env*` files; let Next.js set it automatically (DEV_RULES §4)
+5. **Docker-first** — All npm/node commands via `docker compose run --rm <service>` (DEV_RULES §5)
+6. **CSP headers mandatory** — Configure Content-Security-Policy in middleware or next.config (SECURITY_RULES)
+7. **Server-side validation** — Never trust client input; validate with Zod or equivalent on server (SECURITY_RULES)
+8. **Feature-First structure** — `src/features/<domain>/` for domain-shared logic; route-specific components colocated in `app/[route]/_components/` (ARCHITECTURE_RULES §2.2)
+9. **No `any` type** — TypeScript `strict: true`; justify exceptions with comments (DEV_RULES §2.1)
+10. **Unit tests required** — Business logic, API Route Handlers, shared utils, security code (DEV_RULES §2.9)
+
 ## Development Workflow
 
 <!-- Customize: Describe the development workflow for this project -->
@@ -88,9 +107,10 @@ UI/UX design MUST follow ISO 9241 and Nielsen's heuristics. Accessibility (WCAG 
 ## Governance
 
 - This constitution reflects the governance rules in `docs/governance/`
+- **MANDATORY**: Before writing any implementation code, the AI agent MUST read the applicable rule files in `docs/governance/rules/` and verify compliance against the Concrete Rules above
 - To update rules: modify the source files in `docs/governance/`, then regenerate this constitution via `/speckit-constitution`
 - All implementations MUST pass Constitution Check before proceeding
 - Quality Gates are enforced at every deployment boundary
 - Amendments to this constitution require documentation and version bump
 
-**Version**: 1.0.0 | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
+**Version**: 1.1.0 | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]

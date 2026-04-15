@@ -32,19 +32,46 @@
 
 [Gates determined based on constitution file]
 
+## Governance Compliance Plan *(MANDATORY)*
+
+<!--
+  GATE: This section MUST be completed before Phase 0 research.
+  
+  INSTRUCTIONS FOR AI AGENT:
+  Before creating the implementation plan, you MUST:
+  1. READ the governance rule files listed in Governance References below
+  2. Extract clauses that apply to this feature
+  3. Fill in the compliance table mapping each applicable clause to an implementation task
+  4. If a clause does not apply, explicitly mark it as "N/A" with reason
+  
+  This ensures governance rules are not lost between constitution and implementation.
+-->
+
+| Rule File | Clause | Requirement | Implementation Task | N/A Reason |
+|---|---|---|---|---|
+| DEV_RULES §2.3 | No magic numbers | Named constants with JSDoc | | |
+| DEV_RULES §2.8 | Constants centralized | `as const` in `constants.ts` | | |
+| DEV_RULES §4 | Env fail-fast | Validate env vars at startup | | |
+| DEV_RULES §4 | No explicit NODE_ENV | Verify `.env*` files | | |
+| SECURITY_RULES | CSP headers | Configure CSP | | |
+| SECURITY_RULES | Input validation | Server-side Zod schemas | | |
+| ARCHITECTURE_RULES §2.2 | Feature-First | `src/features/` structure | | |
+| [Add more as applicable] | | | | |
+
 ## Quality Gates *(MANDATORY)*
 
 <!--
   These 7 gates MUST all pass before deployment.
   Reference: docs/governance/rules/QUALITY_GATES.md §2
   All commands MUST be executed via Docker Compose (DEV_RULES §5).
+  Replace <service> with your docker-compose service name (e.g., web).
 -->
 
-- [ ] **Lint** — `docker compose run --rm frontend npm run lint`
-- [ ] **Typecheck** — `docker compose run --rm frontend npm run typecheck`
-- [ ] **Format check** — `docker compose run --rm frontend npm run format:check`
-- [ ] **Unit/Integration test** — `docker compose run --rm frontend npm test`
-- [ ] **Build** — `docker compose run --rm frontend npm run build`
+- [ ] **Lint** — `docker compose run --rm <service> npm run lint`
+- [ ] **Typecheck** — `docker compose run --rm <service> npm run typecheck`
+- [ ] **Format check** — `docker compose run --rm <service> npm run format:check`
+- [ ] **Unit/Integration test** — `docker compose run --rm <service> npm test`
+- [ ] **Build** — `docker compose run --rm <service> npm run build`
 - [ ] **Secret scan** — `docker compose run --rm gitleaks`
 - [ ] **Dependency vuln scan** — `docker compose run --rm osv-scanner`
 
@@ -93,17 +120,20 @@ specs/[###-feature]/
   for this feature. Delete unused options and expand the chosen structure with
   real paths. The delivered plan must not include Option labels.
   
-  Convention: Next.js apps go in frontend/ directory (AGENTS.md §2.4).
+  Convention: Next.js apps go in a dedicated subdirectory (default: web/).
+  The directory name is configurable per project (e.g., frontend/, app/).
+  See AGENTS.md §2.4 and DEV_RULES §1.
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Standard (Next.js in frontend/)
-frontend/
+# [REMOVE IF UNUSED] Option 1: Standard (Next.js in web/)
+web/
 ├── src/
 │   ├── app/           # App Router pages & layouts
 │   ├── components/    # Reusable UI components
+│   ├── features/      # Feature-First domain modules
 │   ├── lib/           # Shared utilities & helpers
-│   └── styles/        # Global CSS
+│   └── config/        # App configuration (env validation, etc.)
 ├── public/            # Static assets
 └── __tests__/         # Test files
 
@@ -119,11 +149,12 @@ tests/
 ├── integration/
 └── unit/
 
-# [REMOVE IF UNUSED] Option 3: Full-stack (frontend + backend)
-frontend/
+# [REMOVE IF UNUSED] Option 3: Full-stack (web + backend)
+web/
 ├── src/
 │   ├── app/
 │   ├── components/
+│   ├── features/
 │   └── lib/
 └── __tests__/
 
@@ -148,9 +179,19 @@ directories captured above]
 
 ## Governance References
 
-- **Development**: [docs/governance/rules/DEV_RULES.md](docs/governance/rules/DEV_RULES.md)
-- **Architecture**: [docs/governance/rules/ARCHITECTURE_RULES.md](docs/governance/rules/ARCHITECTURE_RULES.md)
-- **Security**: [docs/governance/rules/SECURITY_RULES.md](docs/governance/rules/SECURITY_RULES.md)
+<!--
+  MANDATORY: The AI agent MUST read the governance rule files listed below
+  when creating or updating this plan. These are NOT just informational links —
+  they contain concrete implementation constraints that MUST be reflected in
+  the Governance Compliance Plan section above.
+  
+  At minimum, read DEV_RULES, SECURITY_RULES, and ARCHITECTURE_RULES.
+  Read others as applicable to the feature scope.
+-->
+
+- **Development**: [docs/governance/rules/DEV_RULES.md](docs/governance/rules/DEV_RULES.md) ← **READ: coding standards, env rules, test requirements**
+- **Architecture**: [docs/governance/rules/ARCHITECTURE_RULES.md](docs/governance/rules/ARCHITECTURE_RULES.md) ← **READ: layer structure, dependency direction**
+- **Security**: [docs/governance/rules/SECURITY_RULES.md](docs/governance/rules/SECURITY_RULES.md) ← **READ: CSP, headers, validation**
 - **Quality Gates**: [docs/governance/rules/QUALITY_GATES.md](docs/governance/rules/QUALITY_GATES.md)
 - **Performance**: [docs/governance/rules/PERFORMANCE_RULES.md](docs/governance/rules/PERFORMANCE_RULES.md)
 - **SEO**: [docs/governance/rules/SEO_RULES.md](docs/governance/rules/SEO_RULES.md)

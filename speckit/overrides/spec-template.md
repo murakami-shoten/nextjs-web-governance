@@ -158,13 +158,21 @@
 ## Governance References
 
 <!--
-  This section lists the governance rules that apply to this feature.
-  The AI agent should consult these files during specification and implementation.
+  MANDATORY: The AI agent MUST read the governance rule files listed below
+  when creating this specification. These contain concrete constraints that
+  MUST be reflected in the Non-Functional Requirements table above.
+  
+  At minimum:
+  - Read SECURITY_RULES → populate SEC-xxx rows in NFR table
+  - Read PERFORMANCE_RULES → populate PERF-xxx rows
+  - Read SEO_RULES → populate SEO-xxx rows
+  - Read DESIGN_RULES → populate A11Y-xxx rows
+  - Read DEV_RULES → ensure coding constraints are captured in FR or Assumptions
 -->
 
-- **Development**: [docs/governance/rules/DEV_RULES.md](docs/governance/rules/DEV_RULES.md)
-- **Architecture**: [docs/governance/rules/ARCHITECTURE_RULES.md](docs/governance/rules/ARCHITECTURE_RULES.md)
-- **Security**: [docs/governance/rules/SECURITY_RULES.md](docs/governance/rules/SECURITY_RULES.md)
+- **Development**: [docs/governance/rules/DEV_RULES.md](docs/governance/rules/DEV_RULES.md) ← **READ: coding standards, env rules, test requirements**
+- **Architecture**: [docs/governance/rules/ARCHITECTURE_RULES.md](docs/governance/rules/ARCHITECTURE_RULES.md) ← **READ: layer structure, dependency direction**
+- **Security**: [docs/governance/rules/SECURITY_RULES.md](docs/governance/rules/SECURITY_RULES.md) ← **READ: CSP, headers, validation**
 - **Quality Gates**: [docs/governance/rules/QUALITY_GATES.md](docs/governance/rules/QUALITY_GATES.md)
 - **Design/UX**: [docs/governance/rules/DESIGN_RULES.md](docs/governance/rules/DESIGN_RULES.md)
 - **SEO**: [docs/governance/rules/SEO_RULES.md](docs/governance/rules/SEO_RULES.md)

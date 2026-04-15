@@ -81,7 +81,7 @@ fi
 mkdir -p "$OVERRIDES_DST"
 
 # 各テンプレートをコピー（既存ファイルは上書きしない）
-TEMPLATES=("spec-template.md" "plan-template.md" "constitution-template.md")
+TEMPLATES=("spec-template.md" "plan-template.md" "constitution-template.md" "checklist-template.md")
 COPIED=0
 SKIPPED=0
 
@@ -129,9 +129,10 @@ echo "📋 セットアップ済みの内容:"
 echo ""
 echo "  ✅ docs/governance/       — 規約群（サブモジュール）"
 echo "  ✅ .specify/templates/overrides/ — テンプレートオーバーライド"
-echo "     - spec-template.md    — EARS 記法 + 非機能要件テーブル"
-echo "     - plan-template.md    — 品質ゲート 7 項目チェックリスト"
-echo "     - constitution-template.md — Core Principles 8 項目"
+echo "     - spec-template.md    — EARS 記法 + 非機能要件テーブル + 規約参照指示"
+echo "     - plan-template.md    — Governance Compliance Plan + 品質ゲート 7 項目"
+echo "     - constitution-template.md — Core Principles 9 項目（Top 10 違反頻出条項含む）"
+echo "     - checklist-template.md — 規約準拠チェックリスト"
 echo "  ✅ .specify/memory/constitution.md — 事前定義版 Constitution"
 echo ""
 echo "📋 次のステップ:"

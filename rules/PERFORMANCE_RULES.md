@@ -33,7 +33,7 @@
    - 主要サブセット（仮名・頻出漢字・ラテン等）のみ `@font-face` を定義
    - `unicode-range` でブラウザが必要なサブセットだけ非同期ダウンロード
 2. **next/font/local** + 手動 woff2 配置
-   - woff2 ファイルを `frontend/src/fonts/` に配置
+   - woff2 ファイルを `<webdir>/src/fonts/` に配置（`<webdir>` はプロジェクトの Web アプリディレクトリ。デフォルト `web/`）
    - `next/font/local` で読み込み、`unicode-range` を手動指定
 
 ### 2.3 font-display
@@ -75,7 +75,7 @@ done
 ## 4. CJK フォント導入時の推奨ディレクトリ構成
 
 ```
-frontend/src/
+<webdir>/src/                        # <webdir> はプロジェクトの Web アプリディレクトリ（デフォルト web/）
 ├── fonts/                          # woff2 ファイル格納（gitignore しない）
 │   ├── noto-sans-jp-*.woff2        # fontsource から必要サブセットのみコピー
 │   └── README.md                   # フォント追加手順を記載

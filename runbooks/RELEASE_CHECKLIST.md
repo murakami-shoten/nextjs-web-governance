@@ -50,7 +50,7 @@
 - [ ] GTM を利用する場合、CSP ドメインプリセット（`SECURITY_RULES §3.2`）が適用されていること（DevTools コンソールで CSP 違反がないことを確認）
 
 ### 4.3 構成/保守性（DEV_RULES, ARCHITECTURE_RULES）
-- [ ] Next.js アプリコードが `frontend/` 配下に収まっていること
+- [ ] Next.js アプリコードが専用サブディレクトリ（デフォルト `web/`）配下に収まっていること
 - [ ] コンポーネントが役割（ui/domain/features）ごとに整理されていること
 
 ---
