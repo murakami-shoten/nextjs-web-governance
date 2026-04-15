@@ -41,7 +41,9 @@ git add . && git commit -m "feat: integrate governance rules"
 /speckit-implement      ← 実装（品質ゲート通過が計画に組み込み済み）
 ```
 
-> **注意**: コマンド名は spec-kit のバージョンにより変わる可能性があります。最新の情報は [spec-kit README](https://github.com/github/spec-kit) を参照してください。
+> **注意**:
+> - 本ドキュメントでは `/speckit-*` の表記を使用していますが、コマンドのプレフィックスは AI エージェントにより異なります（例: Claude では `/`、他のエージェントでは `$` 等）。実際のプレフィックスは使用する AI エージェントの spec-kit 設定に従ってください。
+> - コマンド名自体も spec-kit のバージョンにより変わる可能性があります。最新の情報は [spec-kit README](https://github.com/github/spec-kit) を参照してください。
 
 ## テンプレートオーバーライドの仕組み
 
