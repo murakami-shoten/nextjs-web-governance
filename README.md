@@ -23,6 +23,7 @@ Web Starter Kit の開発規約・テンプレート・品質基準。Next.js + 
 rules/              開発・アーキテクチャ・セキュリティ等の規約（13ファイル）
 requirements/       要件定義・SOW・機能仕様書のテンプレート群
 runbooks/           リリースチェックリスト等の運用手順書
+speckit/            spec-kit 連携（インストーラー + テンプレートオーバーライド）
 ```
 
 ### rules/（規約）
@@ -56,6 +57,12 @@ runbooks/           リリースチェックリスト等の運用手順書
 | `QUALITY_REPORT_TEMPLATE.md` | 品質保証レポートテンプレート |
 | `GENERATE_REQUIREMENTS.md` | 要件定義書生成ガイド |
 
+### speckit/（spec-kit 連携）
+
+[spec-kit](https://github.com/github/spec-kit) のワークフローで本規約群を **仕組みとして強制する** ためのテンプレートオーバーライドとインストーラー。
+
+詳細（導入手順・仕組み・コマンドフロー）は **[speckit/README.md](speckit/README.md)** を参照。
+
 ## 利用方法
 
 ### Web Starter Kit で使う場合
@@ -73,13 +80,11 @@ git add docs/governance && git commit -m "chore: update governance rules"
 
 ### spec-kit プロジェクトで使う場合
 
-Web Starter Kit に同梱のインストーラースクリプトを使用：
+詳細は **[speckit/README.md](speckit/README.md)** を参照。クイックスタート：
 
 ```bash
-curl -sL https://raw.githubusercontent.com/murakami-shoten/web-starter-kit/main/scripts/install-for-speckit.sh | bash
+curl -sL https://raw.githubusercontent.com/murakami-shoten/nextjs-web-governance/main/speckit/install.sh | bash
 ```
-
-詳細は [Web Starter Kit の README](https://github.com/murakami-shoten/web-starter-kit#spec-kit仕様駆動開発ツールとの連携) を参照。
 
 ### 単独で使う場合
 
@@ -101,9 +106,10 @@ git submodule add https://github.com/murakami-shoten/nextjs-web-governance.git d
 
 以下の変更を行う場合は、参照元プロジェクトへの影響を確認し、関係者の合意を得てから実施すること:
 
-- ディレクトリ名の変更（`rules/`, `requirements/`, `runbooks/`）
+- ディレクトリ名の変更（`rules/`, `requirements/`, `runbooks/`, `speckit/`）
 - 既存ファイルの移動・リネーム・削除
 - ディレクトリ階層の変更
+- `speckit/install.sh` の curl URL 変更（spec-kit 連携プロジェクトのドキュメントに影響）
 
 ### 参照元プロジェクト（既知）
 
