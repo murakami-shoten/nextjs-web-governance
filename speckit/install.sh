@@ -16,7 +16,6 @@
 #   1. spec-kit プロジェクトかどうか確認
 #   2. docs/governance/ に nextjs-web-governance をサブモジュール追加
 #   3. テンプレートオーバーライドを .specify/templates/overrides/ に配置
-#   4. constitution.md を事前定義版で上書き
 # =============================================================================
 set -euo pipefail
 
