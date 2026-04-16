@@ -11,6 +11,18 @@
   - [N/A] Not applicable (with reason)
 -->
 
+## HEARING_RULES / Requirements Compliance
+
+### ヒアリング完了（HEARING_RULES §1）
+- [ ] HEARING_SHEET.md の全 Must 項目が `TBD（未質問）` でない
+- [ ] `REQUIREMENTS_<slug>.md` が作成済みでヒアリング結果が転記されている
+
+### 要件実装の検証（HEARING_RULES §3）
+- [ ] REQUIREMENTS の全 Must 機能要件に対応する実装が存在する
+- [ ] REQUIREMENTS の全 Must 非機能要件（Security/Performance/SEO/A11y）が検証済み
+- [ ] plan.md の Requirements Traceability テーブルの全項目が Verified
+- [ ] 実装が REQUIREMENTS と乖離している箇所は合意済み（変更理由が記録されている）
+
 ## DEV_RULES Compliance
 
 ### Coding Standards (§2)

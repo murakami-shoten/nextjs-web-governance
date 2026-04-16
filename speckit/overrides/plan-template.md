@@ -30,7 +30,9 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- [ ] HEARING_SHEET.md の Must 項目に TBD（未質問）が 0 件であること（HEARING_RULES.md §1）
+- [ ] REQUIREMENTS_<slug>.md が作成済みで、ヒアリング結果が転記されていること
+- [Gates determined based on constitution file]
 
 ## Governance Compliance Plan *(MANDATORY)*
 
@@ -76,6 +78,25 @@
 - [ ] **Dependency vuln scan** — `docker compose run --rm osv-scanner`
 
 > **No exceptions.** If a gate must be skipped, document the reason, deadline, and mitigation in the Complexity Tracking section below.
+
+## Requirements Traceability *(MANDATORY)*
+
+<!--
+  GATE: REQUIREMENTS ドキュメントの全 Must 要件が実装計画にマッピングされていること。
+  
+  INSTRUCTIONS FOR AI AGENT:
+  1. READ docs/projects/<slug>/REQUIREMENTS_<slug>.md
+  2. 各 Must 要件（機能・非機能）を以下のテーブルに記載
+  3. 各要件に対応する実装タスクを割り当て
+  4. 対応する実装タスクがない要件は理由を明記
+  
+  詳細: docs/governance/rules/HEARING_RULES.md §3
+-->
+
+| Req Source | Req ID | Requirement Summary | Implementation Task | Verified |
+|---|---|---|---|---|
+| REQUIREMENTS §x | [ID] | [from requirements] | [task reference] | [ ] |
+| REQUIREMENTS §x | [ID] | [from requirements] | [task reference] | [ ] |
 
 ## Acceptance Criteria Checklist
 
@@ -189,6 +210,7 @@ directories captured above]
   Read others as applicable to the feature scope.
 -->
 
+- **Hearing**: [docs/governance/rules/HEARING_RULES.md](docs/governance/rules/HEARING_RULES.md) ← **READ: hearing enforcement, requirements completion check**
 - **Development**: [docs/governance/rules/DEV_RULES.md](docs/governance/rules/DEV_RULES.md) ← **READ: coding standards, env rules, test requirements**
 - **Architecture**: [docs/governance/rules/ARCHITECTURE_RULES.md](docs/governance/rules/ARCHITECTURE_RULES.md) ← **READ: layer structure, dependency direction**
 - **Security**: [docs/governance/rules/SECURITY_RULES.md](docs/governance/rules/SECURITY_RULES.md) ← **READ: CSP, headers, validation**
@@ -196,3 +218,4 @@ directories captured above]
 - **Performance**: [docs/governance/rules/PERFORMANCE_RULES.md](docs/governance/rules/PERFORMANCE_RULES.md)
 - **SEO**: [docs/governance/rules/SEO_RULES.md](docs/governance/rules/SEO_RULES.md)
 - **Design/UX**: [docs/governance/rules/DESIGN_RULES.md](docs/governance/rules/DESIGN_RULES.md)
+- **Content**: [docs/governance/rules/CONTENT_RULES.md](docs/governance/rules/CONTENT_RULES.md)

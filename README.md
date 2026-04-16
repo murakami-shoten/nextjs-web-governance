@@ -30,6 +30,7 @@ speckit/            spec-kit 連携（インストーラー + テンプレート
 
 | ファイル | 内容 |
 |---|---|
+| `HEARING_RULES.md` | ヒアリング規約（要件ヒアリング〜要件確定の強制ルール） |
 | `DEV_RULES.md` | 開発規約（コミット規約、ブランチ戦略、コードスタイル） |
 | `ARCHITECTURE_RULES.md` | アーキテクチャ規約（疎結合、レイヤー構成） |
 | `SECURITY_RULES.md` | セキュリティ規約（CSP、HSTS、入力検証、ASVS） |

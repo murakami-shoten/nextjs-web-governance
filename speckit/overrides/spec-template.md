@@ -1,9 +1,21 @@
 # Feature Specification: [FEATURE NAME]
 
+<!--
+  HEARING GATE (HEARING_RULES.md §1):
+  この spec を作成する前に、以下を確認すること:
+  1. docs/governance/requirements/HEARING_SHEET.md の Must 項目に TBD（未質問）が残っていないこと
+  2. docs/projects/<slug>/REQUIREMENTS_<slug>.md が作成済みであること
+  3. 本 spec の要件は REQUIREMENTS ドキュメントの内容に基づいて策定すること
+     （$ARGUMENTS の1行記述だけでなく、ヒアリング結果を入力ソースとする）
+  
+  詳細: docs/governance/rules/HEARING_RULES.md
+-->
+
 **Feature Branch**: `[###-feature-name]`  
 **Created**: [DATE]  
 **Status**: Draft  
-**Input**: User description: "$ARGUMENTS"
+**Input**: User description: "$ARGUMENTS"  
+**Requirements Document**: `docs/projects/<slug>/REQUIREMENTS_<slug>.md`
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -163,6 +175,8 @@
   MUST be reflected in the Non-Functional Requirements table above.
   
   At minimum:
+  - Read HEARING_RULES → confirm hearing is complete before spec creation
+  - Read REQUIREMENTS_<slug>.md → use as primary input source for this spec
   - Read SECURITY_RULES → populate SEC-xxx rows in NFR table
   - Read PERFORMANCE_RULES → populate PERF-xxx rows
   - Read SEO_RULES → populate SEO-xxx rows
@@ -170,6 +184,7 @@
   - Read DEV_RULES → ensure coding constraints are captured in FR or Assumptions
 -->
 
+- **Hearing**: [docs/governance/rules/HEARING_RULES.md](docs/governance/rules/HEARING_RULES.md) ← **READ: hearing enforcement, requirements completion check**
 - **Development**: [docs/governance/rules/DEV_RULES.md](docs/governance/rules/DEV_RULES.md) ← **READ: coding standards, env rules, test requirements**
 - **Architecture**: [docs/governance/rules/ARCHITECTURE_RULES.md](docs/governance/rules/ARCHITECTURE_RULES.md) ← **READ: layer structure, dependency direction**
 - **Security**: [docs/governance/rules/SECURITY_RULES.md](docs/governance/rules/SECURITY_RULES.md) ← **READ: CSP, headers, validation**
