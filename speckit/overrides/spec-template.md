@@ -178,28 +178,32 @@
 - [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
 - [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
 
-## Governance References
+## Governance Compliance *(mandatory)*
 
 <!--
-  MANDATORY: The AI agent MUST read the governance rule files listed below
-  when creating this specification. These contain concrete constraints that
-  MUST be reflected in the Non-Functional Requirements table above.
-  
-  At minimum:
-  - Read HEARING_RULES → confirm hearing level (L1/L2/L3) and complete before spec creation
-  - Read requirements.md (this directory) → use as primary input source for this spec
-  - Read SECURITY_RULES → populate SEC-xxx rows in NFR table
-  - Read PERFORMANCE_RULES → populate PERF-xxx rows
-  - Read SEO_RULES → populate SEO-xxx rows
-  - Read DESIGN_RULES → populate A11Y-xxx rows
-  - Read DEV_RULES → ensure coding constraints are captured in FR or Assumptions
+  MANDATORY RULE SCAN:
+  Before creating this specification, the AI agent MUST:
+
+  1. List ALL .md files in docs/governance/rules/
+  2. Read EACH file completely
+  3. Extract ALL mandatory requirements applicable to this feature
+  4. Reflect them in the Non-Functional Requirements table above
+     (add rows as needed — the pre-filled rows are examples, not an exhaustive list)
+
+  DO NOT skip any rule file. The directory may contain rules added after
+  this template was created. Always scan the directory for the current
+  set of rules.
+
+  Common items that are frequently missed by AI agents:
+  - Docker Compose: .env for port configuration, no hardcoded ports (DEV_RULES §4-5)
+  - Forms: CAPTCHA/spam protection is MANDATORY for all forms (SECURITY_RULES §4, EMAIL_RULES)
+  - Environment: .env.example and .env.local.example templates must exist (DEV_RULES §4)
+  - Security headers: CSP, HSTS, X-Content-Type-Options, etc. (SECURITY_RULES §2)
+
+  Additionally, read the following requirement documents:
+  - HEARING_RULES.md → confirm hearing level (L1/L2/L3) and complete before spec creation
+  - requirements.md (this directory) → use as primary input source for this spec
 -->
 
-- **Hearing**: [docs/governance/rules/HEARING_RULES.md](docs/governance/rules/HEARING_RULES.md) ← **READ: hearing enforcement, requirements completion check**
-- **Development**: [docs/governance/rules/DEV_RULES.md](docs/governance/rules/DEV_RULES.md) ← **READ: coding standards, env rules, test requirements**
-- **Architecture**: [docs/governance/rules/ARCHITECTURE_RULES.md](docs/governance/rules/ARCHITECTURE_RULES.md) ← **READ: layer structure, dependency direction**
-- **Security**: [docs/governance/rules/SECURITY_RULES.md](docs/governance/rules/SECURITY_RULES.md) ← **READ: CSP, headers, validation**
-- **Quality Gates**: [docs/governance/rules/QUALITY_GATES.md](docs/governance/rules/QUALITY_GATES.md)
-- **Design/UX**: [docs/governance/rules/DESIGN_RULES.md](docs/governance/rules/DESIGN_RULES.md)
-- **SEO**: [docs/governance/rules/SEO_RULES.md](docs/governance/rules/SEO_RULES.md)
-- **Performance**: [docs/governance/rules/PERFORMANCE_RULES.md](docs/governance/rules/PERFORMANCE_RULES.md)
+**Rule Source**: `docs/governance/rules/*.md` — AI agent must scan ALL files in this directory and apply every applicable rule.
+

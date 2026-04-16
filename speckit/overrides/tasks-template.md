@@ -88,9 +88,12 @@ Examples of foundational tasks (adjust based on your project):
   They ensure requirements and governance rules are verified before user story implementation begins.
   
   INSTRUCTIONS FOR AI AGENT:
+  - List ALL .md files in docs/governance/rules/ and read each one
   - Read requirements.md from this directory
   - Cross-reference all Must items with plan.md's Requirements Traceability table
   - Verify Governance Compliance Plan tasks from plan.md are mapped to implementation tasks
+  - Ensure tasks include ALL applicable governance requirements (e.g., Docker .env setup,
+    CAPTCHA/spam protection for forms, security headers, etc.)
 -->
 - [ ] TXXX Read requirements.md and verify all Must items are addressed in plan.md
 - [ ] TXXX Verify Governance Compliance Plan tasks are included in implementation phases

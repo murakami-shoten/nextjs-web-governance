@@ -44,24 +44,31 @@
   
   INSTRUCTIONS FOR AI AGENT:
   Before creating the implementation plan, you MUST:
-  1. READ the governance rule files listed in Governance References below
-  2. Extract clauses that apply to this feature
-  3. Fill in the compliance table mapping each applicable clause to an implementation task
-  4. If a clause does not apply, explicitly mark it as "N/A" with reason
+  1. List ALL .md files in docs/governance/rules/
+  2. READ each rule file completely
+  3. Extract ALL clauses that apply to this feature
+  4. Fill in the compliance table mapping each applicable clause to an implementation task
+  5. If a clause does not apply, explicitly mark it as "N/A" with reason
+  
+  DO NOT rely on the example rows below — they are illustrative only.
+  Always scan docs/governance/rules/*.md for the current set of rules.
+
+  Common items that are frequently missed by AI agents:
+  - Docker Compose: .env for port configuration, no hardcoded ports (DEV_RULES §4-5)
+  - Forms: CAPTCHA/spam protection is MANDATORY for all forms (SECURITY_RULES §4, EMAIL_RULES)
+  - Environment: .env.example and .env.local.example templates must exist (DEV_RULES §4)
+  - Security headers: CSP, HSTS, X-Content-Type-Options, etc. (SECURITY_RULES §2)
   
   This ensures governance rules are not lost between constitution and implementation.
 -->
 
+**Rule Source**: `docs/governance/rules/*.md` — scan ALL files and extract applicable clauses.
+
 | Rule File | Clause | Requirement | Implementation Task | N/A Reason |
 |---|---|---|---|---|
-| DEV_RULES §2.3 | No magic numbers | Named constants with JSDoc | | |
-| DEV_RULES §2.8 | Constants centralized | `as const` in `constants.ts` | | |
-| DEV_RULES §4 | Env fail-fast | Validate env vars at startup | | |
-| DEV_RULES §4 | No explicit NODE_ENV | Verify `.env*` files | | |
-| SECURITY_RULES | CSP headers | Configure CSP | | |
-| SECURITY_RULES | Input validation | Server-side Zod schemas | | |
-| ARCHITECTURE_RULES §2.2 | Feature-First | `src/features/` structure | | |
-| [Add more as applicable] | | | | |
+| *(example)* DEV_RULES §2.3 | No magic numbers | Named constants with JSDoc | | |
+| *(example)* SECURITY_RULES §4 | Form spam protection | CAPTCHA + rate limiting | | |
+| *(auto-populated from rule scan)* | | | | |
 
 ## Quality Gates *(MANDATORY)*
 
