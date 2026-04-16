@@ -89,6 +89,28 @@
 
 > **No exceptions.** If a gate must be skipped, document the reason, deadline, and mitigation in the Complexity Tracking section below.
 
+## Wireframe Plan *(CONDITIONAL — HEARING_RULES §5)*
+
+<!--
+  This section is CONDITIONAL. Include it ONLY when:
+  - spec.md "Design Deliverables" indicates wireframes are required
+  - requirements.md §4 specifies wireframe creation
+  
+  If wireframes are NOT required, write "N/A — no wireframe required" and skip.
+-->
+
+**Wireframe Required**: [Yes / No — from spec.md Design Deliverables]
+
+| Item | Detail |
+|---|---|
+| Method | [AI-generated HTML mock / User-provided / External tool] |
+| Pages | [List of pages requiring wireframes] |
+| Quality Criteria | DESIGN_RULES.md §8 (SP+PC, real content, error/empty states) |
+| Deliverable Location | `specs/[feature]/wireframes/` |
+| Gate | Phase 2.5 in tasks.md — `[APPROVAL]` blocks Phase 3+ |
+
+> ⚠️ When wireframes are required, implementation (Phase 3+) MUST NOT begin until approved.
+
 ## Requirements Traceability *(MANDATORY)*
 
 <!--

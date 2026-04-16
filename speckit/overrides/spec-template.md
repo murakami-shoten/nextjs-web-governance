@@ -178,6 +178,34 @@
 - [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
 - [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
 
+## Design Deliverables *(conditional)*
+
+<!--
+  WIREFRAME GATE CHECK (HEARING_RULES §5 / DESIGN_RULES §8):
+  
+  This section is REQUIRED when:
+  - The user requests wireframes or UI mockups in the feature description
+  - requirements.md §4 specifies wireframe creation
+  - The feature involves new pages or significant layout changes
+  
+  If none of the above apply, write "N/A — no wireframe required" and proceed.
+  
+  When required, wireframes MUST be created and approved BEFORE implementation.
+  This is enforced in tasks.md as Phase 2.5 (Design Review Gate).
+-->
+
+### Wireframe Plan
+
+- **Required**: [Yes / No / NEEDS CLARIFICATION — check requirements.md §4]
+- **Method**: [AI-generated HTML mock / User-provided / External tool / N/A]
+- **Pages/Screens**: [List all pages requiring wireframes]
+- **Deliverable Location**: `specs/[feature]/wireframes/`
+- **Quality Criteria**: Per DESIGN_RULES.md §8
+  (SP+PC layouts, real content, error/empty states, interaction annotations)
+
+> ⚠️ If wireframes are required, Phase 3+ implementation MUST NOT begin
+> until wireframes are approved (tasks.md Phase 2.5 — Design Review Gate).
+
 ## Governance Compliance *(mandatory)*
 
 <!--

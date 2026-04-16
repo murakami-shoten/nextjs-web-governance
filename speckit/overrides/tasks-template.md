@@ -98,7 +98,64 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX Read requirements.md and verify all Must items are addressed in plan.md
 - [ ] TXXX Verify Governance Compliance Plan tasks are included in implementation phases
 
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Checkpoint**: Foundation ready.
+
+---
+
+## Phase 2.5: Design Review Gate *(CONDITIONAL — skip if no wireframes in spec.md)*
+
+<!--
+  WIREFRAME GATE (HEARING_RULES §5 / DESIGN_RULES §8):
+  
+  This phase is CONDITIONAL. Include it ONLY when:
+  - spec.md "Design Deliverables" section indicates wireframes are required
+  - requirements.md §4 specifies wireframe creation (AI-generated, user-provided, or external tool)
+  
+  If wireframes are NOT required, DELETE this entire phase and proceed to Phase 3.
+  
+  ⛔ BLOCKING GATE (when present):
+  This phase MUST be fully completed (including [APPROVAL]) BEFORE
+  ANY Phase 3+ user story implementation begins.
+  
+  The AI agent executing /speckit.implement MUST:
+  1. Complete all wireframe creation tasks
+  2. STOP execution and present wireframes to the user for review
+  3. Wait for user feedback and revise as needed
+  4. Obtain explicit user approval (mark [APPROVAL] task as [x])
+  5. Update Phase 3+ tasks based on approved wireframe decisions
+  6. Only THEN proceed to Phase 3
+
+  DO NOT skip this gate. DO NOT proceed to Phase 3 with [APPROVAL] unchecked.
+-->
+
+> **⛔ BLOCKING GATE**: ALL tasks in this phase, including `[APPROVAL]`, must be
+> completed before Phase 3+ implementation begins. AI agent MUST stop and
+> wait for user review/approval.
+
+**Purpose**: Create, review, and approve wireframes BEFORE implementation.
+
+### 2.5.1 Wireframe Creation (per DESIGN_RULES §8)
+
+- [ ] TXXX [P] Create wireframe: [Page/Screen] — `specs/[feature]/wireframes/[name].html`
+  - Mobile (375px) + Desktop (1280px) layouts
+  - Real content (no Lorem Ipsum), error/empty states, interaction annotations
+- [ ] TXXX [P] Create wireframe: Shared layout (Header/Footer/Navigation)
+  — `specs/[feature]/wireframes/layout.html`
+
+### 2.5.2 Review & Revision
+
+- [ ] TXXX **[REVIEW]** Present wireframes to user for review
+  *(AI agent MUST stop here and wait for user feedback)*
+- [ ] TXXX Revise wireframes based on user feedback
+- [ ] TXXX **[REVIEW]** Present revised wireframes (repeat until approved)
+
+### 2.5.3 Approval & Task Finalization
+
+- [ ] TXXX **[APPROVAL]** User approves final wireframes
+  *(⛔ BLOCKS Phase 3+. DO NOT proceed until checked.)*
+- [ ] TXXX Update Phase 3+ tasks to reflect approved wireframe decisions
+
+**Checkpoint**: Wireframes approved → Phase 3+ implementation may begin.
 
 ---
 
@@ -194,7 +251,8 @@ Examples of foundational tasks (adjust based on your project):
 ### Phase Dependencies
 - **Setup (Phase 1)**: No dependencies - can start immediately
 - **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
-- **User Stories (Phase 3+)**: All depend on Foundational phase completion
+- **Design Review Gate (Phase 2.5)**: *(CONDITIONAL)* Depends on Foundational — **BLOCKS Phase 3+** when present
+- **User Stories (Phase 3+)**: Depends on Foundational AND Design Review Gate (if present)
   - User stories can then proceed in parallel (if staffed)
   - Or sequentially in priority order (P1 → P2 → P3)
 - **Polish (Final Phase)**: Depends on all desired user stories being complete
