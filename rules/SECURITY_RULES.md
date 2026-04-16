@@ -155,9 +155,70 @@ const gtmCspDomains = process.env.NEXT_PUBLIC_GTM_ID
 
 ## 4. 入力・フォーム
 
-- 入力検証（型/サイズ/形式）を必須
-- CSRFやスパム対策（用途に応じて）を必須
-- レート制限（API/フォーム）を設計に含める
+### 4.1 入力検証（必須）
+
+- すべてのフォーム入力に対し、**サーバーサイドでの検証を必須**とする（クライアント側検証は UX 目的のみ、セキュリティ境界ではない）
+- 検証項目: 型、サイズ上限、形式（正規表現）、必須/任意
+- バリデーションライブラリ（例: Zod）でスキーマを定義し、API Route Handler の入口で適用する
+
+### 4.2 スパム対策 / CAPTCHA（必須）
+
+**ユーザー入力を受け付けるすべてのフォーム**（問い合わせ、会員登録、コメント等）に対し、スパム対策を必須で実装する。
+
+#### 推奨サービス（低ロックイン順）
+
+| サービス | 特徴 | ロックイン度 |
+|---|---|---|
+| [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) | 無料・プライバシー重視・GDPR 対応・ユーザー操作不要 | 低 |
+| [hCaptcha](https://www.hcaptcha.com/) | 無料プラン有・プライバシー重視・GDPR 対応 | 低 |
+| [Google reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3) | 無料・ユーザー操作不要（スコアベース）・Google 依存 | 中 |
+
+> **選定基準**: プロジェクトの要件定義（HEARING_SHEET.md）でスパム対策方式を合意する。特に指定がなければ **Cloudflare Turnstile** を推奨（無料・ユーザー負荷ゼロ・プライバシー準拠）。
+
+#### 実装要件
+
+1. **クライアント側**: CAPTCHA ウィジェットをフォームに埋め込み、トークンを取得する
+2. **サーバー側**: API Route Handler でトークンを**必ずサーバーサイドで検証**する（クライアント側のみの検証は不可）
+3. **環境変数**: サイトキー（`NEXT_PUBLIC_CAPTCHA_SITE_KEY`）とシークレットキー（`CAPTCHA_SECRET_KEY`）を環境変数で管理する
+4. **フォールバック**: CAPTCHA サービス障害時のフォールバック動作を設計に含める（例: 一時的に honeypot + レート制限のみで受付）
+5. **CSP 対応**: 使用する CAPTCHA サービスのドメインを CSP に追加する（§3 参照）
+
+```typescript
+// サーバーサイドトークン検証の例（Cloudflare Turnstile）
+const verifyResponse = await fetch(
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      secret: process.env.CAPTCHA_SECRET_KEY,
+      response: captchaToken,
+      remoteip: clientIp, // optional
+    }),
+  }
+);
+const result = await verifyResponse.json();
+if (!result.success) {
+  return NextResponse.json({ error: "CAPTCHA検証に失敗しました" }, { status: 403 });
+}
+```
+
+### 4.3 CSRF 対策
+
+- フォーム送信には CSRF トークンまたは `SameSite=Strict` Cookie を使用する
+- API Route Handler が外部サイトからの POST を受け付けないよう、`Origin` / `Referer` ヘッダーを検証する
+
+### 4.4 レート制限（必須）
+
+フォーム送信およびパブリック API に対し、レート制限を実装する。
+
+| 対象 | 推奨制限値 | 実装方法 |
+|---|---|---|
+| 問い合わせフォーム | 同一 IP から 5 件/時間 | サーバーサイドで制限（例: Upstash Rate Limit、in-memory Map） |
+| 認証系 API（ログイン等） | 同一 IP から 10 回/15分 | 同上 |
+| パブリック API | 用途に応じて設計 | ミドルウェアで制限 |
+
+> **注意**: レート制限の値はプロジェクト要件に応じて調整する。上記は最低基準。
 
 ---
 
