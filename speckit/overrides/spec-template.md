@@ -2,20 +2,31 @@
 
 <!--
   HEARING GATE (HEARING_RULES.md §1):
-  この spec を作成する前に、以下を確認すること:
-  1. docs/governance/requirements/HEARING_SHEET.md の Must 項目に TBD（未質問）が残っていないこと
-  2. docs/projects/<slug>/REQUIREMENTS_<slug>.md が作成済みであること
-  3. 本 spec の要件は REQUIREMENTS ドキュメントの内容に基づいて策定すること
-     （$ARGUMENTS の1行記述だけでなく、ヒアリング結果を入力ソースとする）
+  この spec を作成する前に、ヒアリング深度を判定し要件を確認すること:
   
-  詳細: docs/governance/rules/HEARING_RULES.md
+  ■ L1（初期構築）:
+    1. HEARING_SHEET.md の全 Must 項目が TBD（未質問）でないこと
+    2. requirements.md をこのディレクトリに作成し、ヒアリング結果を保存すること
+    3. 本 spec は requirements.md の内容に基づいて策定すること
+  
+  ■ L2（機能追加）:
+    1. FEATURE_HEARING_CHECKLIST.md の Must 項目が完了していること
+    2. requirements.md をこのディレクトリに作成し、ヒアリング結果を保存すること
+    3. 本 spec は requirements.md の内容に基づいて策定すること
+  
+  ■ L3（バグ修正）:
+    1. BUGFIX_SPEC_TEMPLATE.md §1 の項目（再現手順・重大度・影響範囲）が完了していること
+    2. requirements.md をこのディレクトリに作成し、バグ概要を保存すること
+  
+  保存先: このファイルと同階層の requirements.md
+  詳細: docs/governance/rules/HEARING_RULES.md §1.1
 -->
 
 **Feature Branch**: `[###-feature-name]`  
 **Created**: [DATE]  
 **Status**: Draft  
 **Input**: User description: "$ARGUMENTS"  
-**Requirements Document**: `docs/projects/<slug>/REQUIREMENTS_<slug>.md`
+**Requirements Document**: `requirements.md`（このディレクトリ内）
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -175,8 +186,8 @@
   MUST be reflected in the Non-Functional Requirements table above.
   
   At minimum:
-  - Read HEARING_RULES → confirm hearing is complete before spec creation
-  - Read REQUIREMENTS_<slug>.md → use as primary input source for this spec
+  - Read HEARING_RULES → confirm hearing level (L1/L2/L3) and complete before spec creation
+  - Read requirements.md (this directory) → use as primary input source for this spec
   - Read SECURITY_RULES → populate SEC-xxx rows in NFR table
   - Read PERFORMANCE_RULES → populate PERF-xxx rows
   - Read SEO_RULES → populate SEO-xxx rows

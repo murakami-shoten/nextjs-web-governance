@@ -81,7 +81,7 @@ fi
 mkdir -p "$OVERRIDES_DST"
 
 # 各テンプレートをコピー（既存ファイルは上書きしない）
-TEMPLATES=("spec-template.md" "plan-template.md" "constitution-template.md" "checklist-template.md")
+TEMPLATES=("spec-template.md" "plan-template.md" "constitution-template.md" "checklist-template.md" "tasks-template.md")
 COPIED=0
 SKIPPED=0
 

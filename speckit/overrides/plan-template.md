@@ -30,8 +30,11 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- [ ] HEARING_SHEET.md の Must 項目に TBD（未質問）が 0 件であること（HEARING_RULES.md §1）
-- [ ] REQUIREMENTS_<slug>.md が作成済みで、ヒアリング結果が転記されていること
+- [ ] ヒアリング深度（L1/L2/L3）を判定済み（HEARING_RULES.md §1.1）
+- [ ] requirements.md がこのディレクトリに作成済みで、ヒアリング結果が保存されていること
+- [ ] [L1のみ] HEARING_SHEET.md の Must 項目に TBD（未質問）が 0 件であること
+- [ ] [L2のみ] FEATURE_HEARING_CHECKLIST.md の Must 項目が完了していること
+- [ ] [L3のみ] BUGFIX_SPEC §1 の必須項目（再現手順・重大度・影響範囲）が完了していること
 - [Gates determined based on constitution file]
 
 ## Governance Compliance Plan *(MANDATORY)*
@@ -82,10 +85,10 @@
 ## Requirements Traceability *(MANDATORY)*
 
 <!--
-  GATE: REQUIREMENTS ドキュメントの全 Must 要件が実装計画にマッピングされていること。
+  GATE: requirements.md の全 Must 要件が実装計画にマッピングされていること。
   
   INSTRUCTIONS FOR AI AGENT:
-  1. READ docs/projects/<slug>/REQUIREMENTS_<slug>.md
+  1. READ requirements.md（このディレクトリ内）
   2. 各 Must 要件（機能・非機能）を以下のテーブルに記載
   3. 各要件に対応する実装タスクを割り当て
   4. 対応する実装タスクがない要件は理由を明記
@@ -95,8 +98,8 @@
 
 | Req Source | Req ID | Requirement Summary | Implementation Task | Verified |
 |---|---|---|---|---|
-| REQUIREMENTS §x | [ID] | [from requirements] | [task reference] | [ ] |
-| REQUIREMENTS §x | [ID] | [from requirements] | [task reference] | [ ] |
+| requirements.md §x | [ID] | [from requirements] | [task reference] | [ ] |
+| requirements.md §x | [ID] | [from requirements] | [task reference] | [ ] |
 
 ## Acceptance Criteria Checklist
 

@@ -29,16 +29,21 @@ git add . && git commit -m "feat: integrate governance rules"
 以下は spec-kit の標準ワークフローです。導入後はテンプレートオーバーライドにより、各ステップで本規約群の品質基準が自動的に反映されます。
 
 ```
-/speckit-constitution   ← 任意。8原則は既に constitution.md に記載済み。
+/speckit-constitution   ← 任意。9原則は既に constitution.md に記載済み。
         ↓                 実行するとプロジェクト名等の残りのプレースホルダーを埋める。
                            既存の原則を上書きせず、追記・補完する動作。
-/speckit-specify        ← 仕様策定。override 版テンプレートにより EARS 記法ガイドや
-        ↓                 非機能要件テーブルが仕様書に自動的に含まれる。
-/speckit-plan           ← 実装計画。品質ゲート 7 項目チェックリストと受入基準テーブル
-        ↓                 が計画書に自動的に含まれる。
-/speckit-tasks          ← plan.md からタスク分解
+/speckit-specify        ← 仕様策定。HEARING GATE により、先にヒアリング深度（L1/L2/L3）を
+        ↓                 判定し、requirements.md を作成してから仕様書を生成する。
+                           EARS 記法ガイドや非機能要件テーブルが自動的に含まれる。
+/speckit-plan           ← 実装計画。Constitution Check で requirements.md の存在を確認。
+        ↓                 品質ゲート 7 項目チェックリストと Requirements Traceability
+                           テーブルが計画書に自動的に含まれる。
+/speckit-tasks          ← plan.md + requirements.md からタスク分解。
+        ↓                 ガバナンスタスク（品質ゲート・要件検証）が自動的に含まれる。
+/speckit-implement      ← 実装。specs/<NNN>/ 内の requirements.md を自動参照。
         ↓
-/speckit-implement      ← 実装（品質ゲート通過が計画に組み込み済み）
+/speckit-checklist      ← ガバナンス準拠チェック。requirements.md の全 Must 要件の
+                           実装検証を含む。
 ```
 
 > **注意**:
@@ -57,10 +62,11 @@ spec-kit はデフォルトで汎用テンプレート（`spec-template.md`, `pl
 
 | テンプレート | spec-kit ワークフロー | 追加内容 | 効果 |
 |---|---|---|---|
-| `constitution-template.md` | `/speckit-constitution`（憲法策定） | Core Principles 9 項目（Top 10 違反頻出条項含む）を事前定義 | プロジェクトの最上位原則として規約が位置づけられ、具体条項が AIのコンテキストに常駐 |
-| `spec-template.md` | `/speckit-specify`（仕様策定） | EARS 記法ガイド、非機能要件テーブル（Security/Performance/SEO/A11y）、規約ファイル直接参照指示 | 仕様書の作成時に品質観点が漏れなく検討される |
-| `plan-template.md` | `/speckit-plan`（実装計画） | Governance Compliance Plan、品質ゲート 7 項目チェックリスト、受入基準テーブル、`web/` レイアウト | AI が規約ファイルを直接読み、条項をタスクにマッピングする |
-| `checklist-template.md` | `/speckit-checklist`（品質チェック） | DEV_RULES/SECURITY_RULES/ARCHITECTURE_RULES 等の条項別チェックリスト | 実装後の規約準拠を体系的に検証 |
+| `constitution-template.md` | `/speckit-constitution`（憲法策定） | Core Principles 9 項目（Top 10 違反頻出条項含む）+ Tiered Hearing レベル参照 | プロジェクトの最上位原則として規約が位置づけられ、具体条項が AI のコンテキストに常駐 |
+| `spec-template.md` | `/speckit-specify`（仕様策定） | HEARING GATE（L1/L2/L3 分岐）、EARS 記法ガイド、非機能要件テーブル、規約ファイル直接参照指示 | ヒアリング結果（requirements.md）の保存を強制し、仕様書の作成時に品質観点が漏れなく検討される |
+| `plan-template.md` | `/speckit-plan`（実装計画） | Constitution Check（Tiered Hearing 対応）、Governance Compliance Plan、品質ゲート 7 項目、Requirements Traceability | AI が requirements.md と規約ファイルを直接読み、条項をタスクにマッピングする |
+| `tasks-template.md` | `/speckit-tasks`（タスク分解） | ガバナンスタスク展開指示（requirements.md 読み込み、品質ゲート実行、チェックリスト検証） | plan.md のガバナンス項目が確実にタスクに展開される |
+| `checklist-template.md` | `/speckit-checklist`（品質チェック） | ヒアリング完了検証（L1/L2/L3 分岐）、requirements.md 実装検証、規約別チェックリスト | 実装後の規約準拠を体系的に検証 |
 
 ### テンプレート解決の仕組み
 
@@ -136,7 +142,17 @@ speckit/
 ├── README.md           ← このファイル（仕組み・導入手順・コマンドフロー）
 ├── install.sh          ← インストーラースクリプト
 └── overrides/          ← テンプレートオーバーライド
-    ├── spec-template.md
-    ├── plan-template.md
-    └── constitution-template.md
+    ├── spec-template.md         ← 仕様策定（HEARING GATE + EARS + NFR）
+    ├── plan-template.md         ← 実装計画（品質ゲート + Requirements Traceability）
+    ├── tasks-template.md        ← タスク分解（ガバナンスタスク展開）
+    ├── constitution-template.md ← 憲法（9原則 + Tiered Hearing）
+    └── checklist-template.md    ← 品質チェック（規約別コンプライアンス）
 ```
+
+## ヒアリング結果の保存先
+
+spec-kit 環境では、ヒアリング結果は `specs/<NNN>-<name>/requirements.md` に保存する（spec.md と同階層）。
+
+- `/speckit.implement` は `specs/<NNN>/` 内の全ファイルを自動で読み込むため、requirements.md も自動的に参照される
+- WSK 環境（spec-kit なし）では `docs/projects/<slug>/REQUIREMENTS_<slug>.md` に保存する
+- 詳細: `docs/governance/rules/HEARING_RULES.md` §1.3

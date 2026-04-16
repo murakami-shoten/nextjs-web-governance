@@ -12,8 +12,11 @@
 Every implementation MUST begin with requirements discovery. No coding before requirements are agreed upon. The workflow is: Hearing → Requirements → Wireframe → SOW → Implementation.
 - Hearing enforcement details: `docs/governance/rules/HEARING_RULES.md`
 - Implementation MUST NOT begin until HEARING_RULES.md §1 requirements are met
-- Use `docs/governance/requirements/HEARING_SHEET.md` to gather requirements
-- Create project-specific requirements from `docs/governance/requirements/REQUIREMENTS_TEMPLATE.md`
+- **First step**: Determine hearing level (HEARING_RULES.md §1.1):
+  - **L1 (Full)**: Use `docs/governance/requirements/HEARING_SHEET.md` for initial project construction
+  - **L2 (Feature)**: Use `docs/governance/requirements/FEATURE_HEARING_CHECKLIST.md` for feature additions
+  - **L3 (Bugfix)**: Use `docs/governance/requirements/BUGFIX_SPEC_TEMPLATE.md` for bug fixes
+- Save hearing results to `requirements.md` in the feature spec directory
 - Never guess or assume — ask the user when information is missing
 - Use `[NEEDS CLARIFICATION]` markers for unresolved items
 <!-- Customize: Add project-specific requirements workflow notes here -->
