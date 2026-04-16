@@ -22,7 +22,6 @@ git add . && git commit -m "feat: integrate governance rules"
 
 1. `docs/governance/` に本リポジトリをサブモジュール追加
 2. `speckit/overrides/` 内のテンプレートを `.specify/templates/overrides/` にコピー
-3. `.specify/memory/constitution.md` を事前定義版テンプレートで上書き
 
 ## 導入後のコマンドフロー
 
@@ -94,16 +93,15 @@ spec-kit の「テンプレート解決スタック」を活用:
 │                                                      │
 │  2. speckit/overrides/*.md を                         │
 │     .specify/templates/overrides/ にコピー            │
-│                                                      │
-│  3. constitution.md を事前定義版で上書き              │
 └──────────────────────────────────────────────────────┘
          ↓
 ┌──────────────────────────────────────────────────────┐
 │ 開発時（AI エージェントが spec-kit コマンドを実行）    │
 │                                                      │
 │  /speckit-constitution                               │
-│    → constitution.md に 8原則が記載済み               │
-│    → AI はプロジェクト固有情報を追記するだけ          │
+│    → resolve_template() で overrides/constitution-  │
+│      template.md を取得し、constitution.md を生成     │
+│    → 9原則 + Tiered Hearing が自動的に含まれる       │
 │                                                      │
 │  /speckit-specify                                    │
 │    → create-new-feature.sh が resolve_template() で  │

@@ -25,7 +25,6 @@ REPO_URL="https://github.com/murakami-shoten/nextjs-web-governance.git"
 INSTALL_PATH="docs/governance"
 OVERRIDES_SRC="$INSTALL_PATH/speckit/overrides"
 OVERRIDES_DST=".specify/templates/overrides"
-CONSTITUTION_FILE=".specify/memory/constitution.md"
 
 # --- 色定義 ---
 RED='\033[0;31m'
@@ -106,19 +105,6 @@ done
 info "テンプレートオーバーライドを配置しました（${COPIED} 件コピー / ${SKIPPED} 件スキップ）。"
 
 # =============================================================================
-# Step 4: constitution.md を事前定義版テンプレートで上書き
-# =============================================================================
-CONSTITUTION_SRC="$OVERRIDES_SRC/constitution-template.md"
-
-if [ -f "$CONSTITUTION_SRC" ]; then
-  echo "📜 Constitution を事前定義版テンプレートで更新中..."
-  cp "$CONSTITUTION_SRC" "$CONSTITUTION_FILE"
-  info "Constitution を更新しました: $CONSTITUTION_FILE"
-else
-  warn "Constitution テンプレートが見つかりません: $CONSTITUTION_SRC（スキップ）"
-fi
-
-# =============================================================================
 # 完了メッセージ
 # =============================================================================
 echo ""
@@ -129,17 +115,17 @@ echo "📋 セットアップ済みの内容:"
 echo ""
 echo "  ✅ docs/governance/       — 規約群（サブモジュール）"
 echo "  ✅ .specify/templates/overrides/ — テンプレートオーバーライド"
-echo "     - spec-template.md    — EARS 記法 + 非機能要件テーブル + 規約参照指示"
-echo "     - plan-template.md    — Governance Compliance Plan + 品質ゲート 7 項目"
-echo "     - constitution-template.md — Core Principles 9 項目（Top 10 違反頻出条項含む）"
-echo "     - checklist-template.md — 規約準拠チェックリスト"
-echo "  ✅ .specify/memory/constitution.md — 事前定義版 Constitution"
+echo "     - spec-template.md    — HEARING GATE + EARS 記法 + 非機能要件テーブル + 規約参照指示"
+echo "     - plan-template.md    — Governance Compliance Plan + 品質ゲート 7 項目 + Requirements Traceability"
+echo "     - tasks-template.md   — ガバナンスタスク展開 + requirements.md 参照指示"
+echo "     - constitution-template.md — Core Principles 9 項目 + Tiered Hearing（Top 10 違反頻出条項含む）"
+echo "     - checklist-template.md — 規約準拠チェックリスト（Tiered Hearing 対応）"
 echo ""
 echo "📋 次のステップ:"
 echo ""
 echo "  1. AI エージェント（Claude Code 等）を起動"
-echo "  2. speckit-constitution を実行してプロジェクト固有の情報を埋める（任意）"
-echo "     （Core Principles は既にテンプレートに含まれています）"
+echo "  2. speckit-constitution を実行して Constitution を生成する"
+echo "     （オーバーライドテンプレートにより 9 原則が自動的に含まれます）"
 echo "  3. speckit-specify で仕様策定を開始"
 echo "  4. git add . && git commit -m 'feat: integrate governance rules'"
 echo ""
@@ -148,3 +134,4 @@ echo "     （例: Claude では / 、他のエージェントでは \$ 等）"
 echo ""
 echo "📖 詳細: https://github.com/murakami-shoten/nextjs-web-governance/tree/main/speckit"
 echo "======================================================="
+
