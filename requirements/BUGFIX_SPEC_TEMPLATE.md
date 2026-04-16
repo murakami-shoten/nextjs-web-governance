@@ -1,7 +1,9 @@
 # バグ修正仕様書テンプレート（Bugfix Spec）
 
 > 複雑なバグの根本原因分析・修正設計・リグレッション防止を構造化するテンプレート。
-> 複製して `docs/projects/<project_slug>/specs/bugfix-<issue_slug>.md` に保存する（テンプレは編集しない）。
+> 複製して仕様ディレクトリに保存する（テンプレは編集しない）。保存先: `HEARING_RULES.md` §1.3
+> - spec-kit + NWG: `specs/<NNN>-<name>/bugfix-<issue_slug>.md`
+> - WSK（spec-kit なし）: `docs/projects/<project_slug>/specs/bugfix-<issue_slug>.md`
 
 **全バグに作成する必要はない。** 以下のいずれかに該当する場合にのみ使用する:
 - クリティカルパス（CV導線・決済・認証等）のバグ

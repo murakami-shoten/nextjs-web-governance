@@ -1,7 +1,9 @@
 # 機能仕様書テンプレート（Feature Spec）
 
 > 個別機能の要件・設計・タスクを1セットで管理するテンプレート。
-> 複製して `docs/projects/<project_slug>/specs/<feature_slug>.md` に保存する（テンプレは編集しない）。
+> 複製して仕様ディレクトリに保存する（テンプレは編集しない）。保存先: `HEARING_RULES.md` §1.3
+> - spec-kit + NWG: `specs/<NNN>-<name>/<feature_slug>.md`
+> - WSK（spec-kit なし）: `docs/projects/<project_slug>/specs/<feature_slug>.md`
 
 **全機能に作成する必要はない。** 以下のいずれかに該当する「複雑な機能」にのみ使用する:
 - 条件分岐やエラーハンドリングが3パターン以上ある

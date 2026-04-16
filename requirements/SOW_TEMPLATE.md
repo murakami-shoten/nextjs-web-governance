@@ -1,6 +1,8 @@
 # SOW (Statement of Work) テンプレート
 
-このファイルはテンプレートです。各フェーズごとに複製し、`docs/projects/<project_slug>/SOW_<phase>.md` として保存してください。
+このファイルはテンプレートです。各フェーズごとに複製し、仕様ディレクトリに保存してください（保存先: `HEARING_RULES.md` §1.3）。
+- spec-kit + NWG: `specs/<NNN>-<name>/sow_<phase>.md`
+- WSK（spec-kit なし）: `docs/projects/<project_slug>/SOW_<phase>.md`
 
 ---
 
@@ -61,5 +63,7 @@
 - 定例/レビュー頻度、チャネル、承認者: TBD
 
 ## 9. 参照
-- 要件定義書: `docs/projects/<project_slug>/REQUIREMENTS_<project_slug>.md`
+- 要件定義書: 仕様ディレクトリ内の requirements.md（`HEARING_RULES.md` §1.3）
+  - spec-kit + NWG: `specs/<NNN>-<name>/requirements.md`
+  - WSK: `docs/projects/<project_slug>/REQUIREMENTS_<project_slug>.md`
 - 関連ドキュメント: TBD

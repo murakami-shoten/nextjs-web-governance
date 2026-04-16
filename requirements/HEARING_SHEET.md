@@ -8,7 +8,10 @@
 - TBDの表記ルール: 「まだ未質問」は `TBD（未質問）`、ユーザーに聞いて保留になったら `TBD（確認済/理由/期限）` とメモする（再質問防止のため）
 
 - 目的: コーポレートサイト構築に必要な要件を漏れなく確定する
-- 出力: `docs/projects/<project_slug>/REQUIREMENTS_<project_slug>.md`（テンプレ `REQUIREMENTS_TEMPLATE.md` を複製して作成）
+- 出力: ヒアリング結果は仕様ディレクトリに保存する（`HEARING_RULES.md` §1.3）
+  - spec-kit + NWG: `specs/<NNN>-<name>/requirements.md`
+  - WSK（spec-kit なし）: `docs/projects/<project_slug>/REQUIREMENTS_<project_slug>.md`
+  - テンプレ `REQUIREMENTS_TEMPLATE.md` を複製して作成
 
 （作成日: 2026-01-27 JST）
 

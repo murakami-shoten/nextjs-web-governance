@@ -1,7 +1,9 @@
 # リリース準備SOW（SOW_RELEASE_PREP）テンプレート
 
 このファイルは **「要件定義時に未定だが、リリースまでに必須」** とされた項目（アセット、文言、契約等）を管理するためのSOWテンプレートです。
-`docs/projects/<project_slug>/SOW_RELEASE_PREP.md` として保存し、通常の開発SOWと並行して消化します。
+仕様ディレクトリに `SOW_RELEASE_PREP.md` として保存し、通常の開発SOWと並行して消化します（保存先: `HEARING_RULES.md` §1.3）。
+- spec-kit + NWG: `specs/<NNN>-<name>/sow_release_prep.md`
+- WSK（spec-kit なし）: `docs/projects/<project_slug>/SOW_RELEASE_PREP.md`
 
 ---
 

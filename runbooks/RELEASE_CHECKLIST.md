@@ -64,7 +64,9 @@
 
 ## 6. ドキュメント整備 (Documentation)
 
-- [ ] `docs/projects/<project_slug>/QUALITY_REPORT.md` が作成され、品質ゲートの結果が記録されていること
+- [ ] 品質保証レポートが作成され、品質ゲートの結果が記録されていること
+  - spec-kit + NWG: `specs/<NNN>-<name>/QUALITY_REPORT.md`
+  - WSK: `docs/projects/<project_slug>/QUALITY_REPORT.md`
 - [ ] ルートの `README.md` がプロジェクト固有の内容に書き直され、不要なテンプレート情報が削除されていること
 - [ ] 詳細ドキュメントが適切に分割され、リンクで辿れるよう整理されていること
 
