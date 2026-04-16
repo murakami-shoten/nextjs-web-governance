@@ -104,6 +104,30 @@ done
 info "テンプレートオーバーライドを配置しました（${COPIED} 件コピー / ${SKIPPED} 件スキップ）。"
 
 # =============================================================================
+# Step 4: NWG Governance Extension をインストール
+# =============================================================================
+EXTENSION_SRC="$INSTALL_PATH/speckit/extension"
+EXT_INSTALLED=0
+
+if [ -d "$EXTENSION_SRC" ]; then
+  echo "🔌 NWG Governance Extension をインストール中..."
+  if command -v specify &>/dev/null; then
+    if specify extension add --dev "$EXTENSION_SRC" 2>/dev/null; then
+      info "Governance Extension をインストールしました。"
+      EXT_INSTALLED=1
+    else
+      warn "Extension のインストールに失敗しました。specify CLI のバージョンを確認してください。"
+      warn "手動インストール: specify extension add --dev $EXTENSION_SRC"
+    fi
+  else
+    warn "specify CLI が見つかりません。Extension の手動インストールが必要です:"
+    echo "  specify extension add --dev $EXTENSION_SRC"
+  fi
+else
+  warn "Extension ソースが見つかりません: $EXTENSION_SRC"
+fi
+
+# =============================================================================
 # 完了メッセージ
 # =============================================================================
 echo ""
@@ -114,11 +138,16 @@ echo "📋 セットアップ済みの内容:"
 echo ""
 echo "  ✅ docs/governance/       — 規約群（サブモジュール）"
 echo "  ✅ .specify/templates/overrides/ — テンプレートオーバーライド"
-echo "     - spec-template.md    — HEARING GATE + EARS 記法 + 非機能要件テーブル + 規約参照指示"
+echo "     - spec-template.md    — Design Deliverables + 動的ルール走査 + 非機能要件テーブル"
 echo "     - plan-template.md    — Governance Compliance Plan + 品質ゲート 7 項目 + Requirements Traceability"
-echo "     - tasks-template.md   — ガバナンスタスク展開 + requirements.md 参照指示"
-echo "     - constitution-template.md — Core Principles 9 項目 + Tiered Hearing（Top 10 違反頻出条項含む）"
-echo "     - checklist-template.md — 規約準拠チェックリスト（Tiered Hearing 対応）"
+echo "     - tasks-template.md   — Phase 2.5 (Design Review Gate) + ガバナンスタスク展開"
+echo "     - constitution-template.md — Core Principles 9 項目 + Tiered Hearing + 優先順位ルール"
+echo "     - checklist-template.md — 規約準拠チェックリスト（全ルール対応）"
+if [ "$EXT_INSTALLED" -eq 1 ]; then
+  echo "  ✅ NWG Governance Extension — 全フェーズ自動検証（hooks: before_specify/plan/tasks/implement + after_implement）"
+else
+  echo "  ⚠️  NWG Governance Extension — 未インストール（手動: specify extension add --dev $EXTENSION_SRC）"
+fi
 echo ""
 echo "📋 次のステップ:"
 echo ""

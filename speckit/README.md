@@ -1,6 +1,9 @@
 # spec-kit 連携
 
-[spec-kit](https://github.com/github/spec-kit) は、AI を活用した仕様駆動開発（Spec-Driven Development）のツールキットです。本規約群はテンプレートオーバーライドにより spec-kit のワークフローと統合できます。
+[spec-kit](https://github.com/github/spec-kit) は、AI を活用した仕様駆動開発（Spec-Driven Development）のツールキットです。本規約群は **2 つの仕組み** で spec-kit のワークフローと統合します:
+
+1. **テンプレートオーバーライド** — 各フェーズの出力フォーマットにガバナンス要件を埋め込む
+2. **NWG Governance Extension** — 各フェーズの前後で hooks を発火し、ルール準拠を検証する
 
 > **前提**: spec-kit の利用には Python 3.11+ と [uv](https://docs.astral.sh/uv/) が必要です。
 
@@ -22,27 +25,34 @@ git add . && git commit -m "feat: integrate governance rules"
 
 1. `docs/governance/` に本リポジトリをサブモジュール追加
 2. `speckit/overrides/` 内のテンプレートを `.specify/templates/overrides/` にコピー
+3. NWG Governance Extension をインストール（`specify extension add --dev`）
 
 ## 導入後のコマンドフロー
 
-以下は spec-kit の標準ワークフローです。導入後はテンプレートオーバーライドにより、各ステップで本規約群の品質基準が自動的に反映されます。
+以下は spec-kit の標準ワークフローです。導入後は **テンプレートオーバーライド**（出力フォーマット制御）と **Extension hooks**（進行可否ゲート）の二重防御により、各ステップで規約準拠が検証されます。
 
 ```
-/speckit-constitution   ← 任意。9原則は既に constitution.md に記載済み。
-        ↓                 実行するとプロジェクト名等の残りのプレースホルダーを埋める。
-                           既存の原則を上書きせず、追記・補完する動作。
-/speckit-specify        ← 仕様策定。HEARING GATE により、先にヒアリング深度（L1/L2/L3）を
-        ↓                 判定し、requirements.md を作成してから仕様書を生成する。
-                           EARS 記法ガイドや非機能要件テーブルが自動的に含まれる。
-/speckit-plan           ← 実装計画。Constitution Check で requirements.md の存在を確認。
-        ↓                 品質ゲート 7 項目チェックリストと Requirements Traceability
-                           テーブルが計画書に自動的に含まれる。
-/speckit-tasks          ← plan.md + requirements.md からタスク分解。
-        ↓                 ガバナンスタスク（品質ゲート・要件検証）が自動的に含まれる。
-/speckit-implement      ← 実装。specs/<NNN>/ 内の requirements.md を自動参照。
+/speckit-constitution   ← 任意。9原則 + Priority Resolution が constitution.md に含まれる。
         ↓
-/speckit-checklist      ← ガバナンス準拠チェック。requirements.md の全 Must 要件の
-                           実装検証を含む。
+  🔌 [before_specify hook] → pre-check: ヒアリング深度判定 + rules/*.md 動的走査
+        ↓
+/speckit-specify        ← 仕様策定。HEARING GATE + Design Deliverables + 動的ルール走査。
+        ↓                 推測禁止: Must 未回答は TBD として残す。
+  🔌 [before_plan hook] → gate-check: requirements.md 検証 + TBD/AI推測 検出
+        ↓
+/speckit-plan           ← 実装計画。品質ゲート 7 項目 + Requirements Traceability。
+        ↓
+  🔌 [before_tasks hook] → gate-check: requirements.md 検証
+        ↓
+/speckit-tasks          ← タスク分解。Phase 2.5 (Design Review Gate) + ガバナンスタスク。
+        ↓
+  🔌 [before_implement hook] → gate-check: 上記 + ワイヤーフレーム承認検証
+        ↓
+/speckit-implement      ← 実装。
+        ↓
+  🔌 [after_implement hook] → quality-gate: 品質ゲート 7 項目実行 + 全ルール準拠検証
+        ↓
+/speckit-checklist      ← 最終チェック。全規約準拠を体系的に検証。
 ```
 
 > **注意**:
@@ -55,7 +65,7 @@ git add . && git commit -m "feat: integrate governance rules"
 
 spec-kit はデフォルトで汎用テンプレート（`spec-template.md`, `plan-template.md` 等）を使用して仕様書や計画書を生成する。これらの汎用テンプレートには本規約群固有の品質基準（EARS 記法、品質ゲート 7 項目、CSP/SEO 要件等）が含まれないため、AI エージェントが仕様策定・計画立案する際に規約が考慮されない問題があった。
 
-テンプレートオーバーライドにより、spec-kit の各ワークフロー段階で規約準拠を構造的に保証する。
+テンプレートオーバーライドにより、各ワークフロー段階の **出力フォーマット** にガバナンス要件を埋め込む。Extension hooks により、各段階の **進行可否** を検証する。
 
 ### 各テンプレートの役割
 
@@ -139,12 +149,20 @@ git commit -m "chore: update governance template overrides"
 speckit/
 ├── README.md           ← このファイル（仕組み・導入手順・コマンドフロー）
 ├── install.sh          ← インストーラースクリプト
-└── overrides/          ← テンプレートオーバーライド
-    ├── spec-template.md         ← 仕様策定（HEARING GATE + EARS + NFR）
-    ├── plan-template.md         ← 実装計画（品質ゲート + Requirements Traceability）
-    ├── tasks-template.md        ← タスク分解（ガバナンスタスク展開）
-    ├── constitution-template.md ← 憲法（9原則 + Tiered Hearing）
-    └── checklist-template.md    ← 品質チェック（規約別コンプライアンス）
+├── overrides/          ← テンプレートオーバーライド（出力フォーマット制御）
+│   ├── spec-template.md         ← 仕様策定（Design Deliverables + 動的ルール走査 + NFR）
+│   ├── plan-template.md         ← 実装計画（品質ゲート + Requirements Traceability）
+│   ├── tasks-template.md        ← タスク分解（Phase 2.5 + ガバナンスタスク展開）
+│   ├── constitution-template.md ← 憲法（9原則 + Priority Resolution）
+│   └── checklist-template.md    ← 品質チェック（全規約コンプライアンス）
+└── extension/          ← NWG Governance Extension（進行可否ゲート）
+    ├── extension.yml            ← マニフェスト（hooks 定義）
+    ├── commands/
+    │   ├── pre-check.md         ← before_specify: ヒアリング深度 + ルール走査
+    │   ├── gate-check.md        ← before_plan/tasks/implement: requirements 検証
+    │   └── quality-gate.md      ← after_implement: 品質ゲート + ルール準拠
+    └── scripts/bash/
+        └── governance-check.sh  ← 構造チェックスクリプト
 ```
 
 ## ヒアリング結果の保存先

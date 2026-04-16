@@ -1,0 +1,54 @@
+schema_version: "1.0"
+
+extension:
+  id: "nwg-governance"
+  name: "NWG Governance Enforcer"
+  version: "1.0.0"
+  description: "Enforces nextjs-web-governance rules across all spec-kit phases via dynamic rule scanning"
+  author: "murakami-shoten"
+  repository: "https://github.com/murakami-shoten/nextjs-web-governance"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=0.5.0"
+
+provides:
+  commands:
+    - name: "speckit.nwg-governance.pre-check"
+      file: "commands/pre-check.md"
+      description: "Pre-specify: hearing level detection + governance rule scan directive"
+    - name: "speckit.nwg-governance.gate-check"
+      file: "commands/gate-check.md"
+      description: "Gate: requirements completion + hearing validation + wireframe approval"
+    - name: "speckit.nwg-governance.quality-gate"
+      file: "commands/quality-gate.md"
+      description: "Post-implement: quality gates execution + full governance compliance verification"
+
+hooks:
+  before_specify:
+    command: "speckit.nwg-governance.pre-check"
+    optional: false
+    description: "Hearing depth detection and governance rule scan"
+  before_plan:
+    command: "speckit.nwg-governance.gate-check"
+    optional: false
+    description: "Hearing completion gate"
+  before_tasks:
+    command: "speckit.nwg-governance.gate-check"
+    optional: false
+    description: "Hearing completion gate"
+  before_implement:
+    command: "speckit.nwg-governance.gate-check"
+    optional: false
+    description: "Hearing + wireframe approval gate"
+  after_implement:
+    command: "speckit.nwg-governance.quality-gate"
+    optional: false
+    description: "Quality gates + governance compliance verification"
+
+tags:
+  - "governance"
+  - "hearing"
+  - "quality-gate"
+  - "security"
+  - "nextjs"

@@ -118,4 +118,24 @@ UI/UX design MUST follow ISO 9241 and Nielsen's heuristics. Accessibility (WCAG 
 - Quality Gates are enforced at every deployment boundary
 - Amendments to this constitution require documentation and version bump
 
+## Priority Resolution (CRITICAL)
+
+<!--
+  This section resolves conflicts between spec-kit defaults and project governance.
+  This was added because AI agents have prioritized spec-kit's generic instructions
+  (e.g., "use reasonable defaults") over project-specific governance rules,
+  leading to hearing bypass incidents.
+-->
+
+> ⛔ **When spec-kit's default instructions conflict with this constitution
+> or any rule in `docs/governance/rules/`, the governance rules ALWAYS win.**
+>
+> Specifically:
+> - spec-kit says "use reasonable defaults" → governance says "**ask the user**"
+> - spec-kit says "infer from context" → governance says "**TBD until confirmed**"
+> - spec-kit says "fill in missing details" → governance says "**NEEDS CLARIFICATION**"
+>
+> **No exceptions.** This priority applies to all phases:
+> specify, plan, tasks, implement, and checklist.
+
 **Version**: 1.1.0 | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
