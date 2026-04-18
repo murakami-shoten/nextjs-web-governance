@@ -222,11 +222,95 @@ if (!result.success) {
 
 ---
 
-## 5. 依存関係と秘密情報
+## 5. 依存関係とサプライチェーンセキュリティ
+
+### 5.1 依存脆弱性スキャン（必須）
 
 - 依存脆弱性スキャンを必須化（例: OSV-Scanner）
--  секрет（鍵/トークン）検出を必須化（例: gitleaks）
+
+### 5.2 秘密情報の保護（必須）
+
+- シークレット（鍵/トークン）検出を必須化（例: gitleaks）
 - `.env` や秘密鍵はコミット禁止（テンプレのみOK）
+
+### 5.3 サプライチェーン攻撃の緩和（推奨）
+
+npm 公開レジストリ（`registry.npmjs.org`）は GitHub / Microsoft が運営するプロプライエタリサービスだが、**誰でもアカウントを作成してパッケージを公開**でき、事前審査は存在しない。そのため、悪意あるパッケージの混入リスクが構造的に存在する:
+
+- **タイポスクワッティング**: 人気パッケージに似た名前（例: `lodahs`）で悪意あるパッケージを公開
+- **postinstall 悪用**: `npm install` 時に自動実行されるスクリプトで任意コード（環境変数窃取等）を実行
+- **アカウント乗っ取り**: 正規メンテナの認証情報を窃取し、既存パッケージに悪意あるバージョンを publish
+- **スロップスクワッティング**: AI が幻覚した架空パッケージ名を攻撃者が先に登録
+
+以下の多層防御を推奨する（**コスト0で導入可能**）:
+
+| 対策 | 方法 | 効果 |
+|---|---|---|
+| **install スクリプト無効化** | `.npmrc` に `ignore-scripts=true` | `npm install` 時の任意コード実行を防止 |
+| **lockfile 厳密インストール** | Docker / CI では `npm ci` を使用（DEV_RULES §5） | 未承認の依存バージョン変更を防止 |
+| **レジストリ署名検証** | `npm audit signatures` を品質ゲートに追加 | レジストリ上でのパッケージ改ざんを検出 |
+| **新規依存の事前レビュー** | 依存追加時に「なぜ必要か」を明記（DEV_RULES §6） | 不要な依存の混入防止 |
+
+#### `.npmrc` 推奨設定
+
+プロジェクトルートに `.npmrc` を配置し、Git にコミットする:
+
+```ini
+# サプライチェーン攻撃の緩和（SECURITY_RULES §5.3）
+# postinstall スクリプトの自動実行を無効化
+ignore-scripts=true
+```
+
+> **注意**: `ignore-scripts=true` 設定時、一部のパッケージは postinstall スクリプトに依存しており、
+> そのままでは正常に動作しない場合がある。下記の対処手順を参照すること。
+
+#### `ignore-scripts=true` でパッケージが動かない場合の対処
+
+**症状**: `npm ci --ignore-scripts` 後にビルドエラーやランタイムエラーが発生する。
+`postinstall` スクリプトでコード生成やネイティブバイナリのセットアップを行うパッケージが原因。
+
+**対処手順**:
+
+1. エラーメッセージからどのパッケージの postinstall が必要か特定する
+2. Dockerfile で `npm ci` の **後に** 該当パッケージのセットアップコマンドを明示的に実行する
+3. 何が実行されているかがコードで明示されるため、むしろ保守性は向上する
+
+**よくある例**:
+
+```dockerfile
+# 共通: lockfile 厳密インストール（postinstall は実行しない）
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+
+# --- 以下、必要なパッケージのみ明示的に実行 ---
+
+# Prisma: スキーマからクライアントコードを生成
+COPY prisma ./prisma
+RUN npx prisma generate
+
+# sharp: Next.js 画像最適化用のネイティブバイナリを取得（v0.33+ は通常不要）
+# RUN npx sharp install
+
+# bcrypt: ネイティブモジュールのビルド（bcryptjs を使う場合は不要）
+# RUN npx node-pre-gyp install --fallback-to-build
+```
+
+**判断基準**:
+
+| パッケージの種類 | 例 | `ignore-scripts` の影響 | 対処 |
+|---|---|---|---|
+| 純粋な JS ライブラリ | React, Zod, microcms-js-sdk, nodemailer | なし（そのまま動く） | 不要 |
+| コード生成が必要 | Prisma, GraphQL codegen | 生成コマンドが実行されない | Dockerfile で `npx <tool> generate` |
+| ネイティブバイナリが必要 | sharp, bcrypt | バイナリのダウンロード/ビルドがされない | prebuild 版を優先 or Dockerfile で明示実行 |
+| prebuilt バイナリ方式 | @swc/core, esbuild, sharp v0.33+ | なし（optional deps で自動取得） | 不要 |
+
+> **ポイント**: 一般的な Web 制作の依存（Next.js + React + Zod + Framer Motion + CMS SDK 等）は
+> ほとんどが純粋な JS または prebuilt バイナリ方式であり、**大半のプロジェクトではそのまま動作する**。
+> 影響が出るのは主に Prisma 等のコード生成ツールやネイティブモジュールに限られる。
+
+#### プライベートレジストリについて
+
+大規模組織やコンプライアンス要件が厳しいプロジェクトでは、プライベートレジストリ（JFrog Artifactory, Verdaccio, GitHub Packages 等）の導入も選択肢となる。ただし運用コストが高く、先進的なパッケージの即座利用が制限される場合がある。導入可否はヒアリング（HEARING_SHEET.md §6）でユーザーと合意すること。
 
 ---
 
