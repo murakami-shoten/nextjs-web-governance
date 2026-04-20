@@ -151,6 +151,28 @@ const gtmCspDomains = process.env.NEXT_PUBLIC_GTM_ID
 >
 > **公式リファレンス**: [Google Tag Platform — CSP guide](https://developers.google.com/tag-platform/security/guides/csp) に必要ドメインの一次情報がある。上記プリセットはこのガイドおよび実運用での検証結果に基づく。
 
+### 3.3 Google Maps 利用時の CSP ドメイン
+
+Google Maps をサイトに埋め込む場合、埋め込み方式に応じて以下の CSP ドメインを許可する必要がある。
+
+#### iframe 方式（API キー不要）
+
+| ディレクティブ | ドメイン | 用途 |
+|---|---|---|
+| **frame-src** | `https://www.google.com` | Google Maps 埋め込み iframe |
+
+#### Maps JavaScript API 方式
+
+| ディレクティブ | ドメイン | 用途 |
+|---|---|---|
+| **script-src** | `https://maps.googleapis.com` | Maps API スクリプト |
+| **connect-src** | `https://maps.googleapis.com` | タイルデータ・ジオコーディング等 |
+| **img-src** | `https://maps.gstatic.com` | 地図タイル画像 |
+| | `https://maps.googleapis.com` | ストリートビュー等の画像 |
+| **font-src** | `https://fonts.gstatic.com` | 地図ラベル用フォント |
+
+> **推奨実装パターン**: §3.2 の GTM/GA4 プリセットと同様に、`NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` の有無で条件分岐し、Maps を使わないプロジェクトでは不要なドメインを許可しない設計とする。
+
 ---
 
 ## 4. 入力・フォーム
