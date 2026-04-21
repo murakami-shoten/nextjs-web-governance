@@ -45,7 +45,10 @@
 
 ### 4.3 品質ゲート
 
-- [ ] QUALITY_GATES の必須項目を通過（該当する場合）
+- [ ] QUALITY_GATES の必須項目を通過（`DEV_RULES §5` に従い `docker compose run --rm <service>` 経由で実行）
+  - 例: `docker compose run --rm frontend npm run lint`
+  - 例: `docker compose run --rm frontend npm run build`
+  - 例: `docker compose run --rm gitleaks`
 - [ ] フェーズ特有の完了条件:（例: 主要画面モック3枚承認、E2Eシナリオ5本パス など）
 
 ## 5. 前提・依存

@@ -12,7 +12,7 @@
 
 ## 2. 必須ゲート（最小）
 
-| ゲート | 目的 | 実行コマンド | 失敗時の扱い |
+| ゲート | 目的 | 実行コマンド（※1） | 失敗時の扱い |
 |---|---|---|---|
 | Lint | コード規約（`core-web-vitals` 含む） | `npm run lint` | ブロック |
 | Typecheck | 型安全 | `npm run typecheck` | ブロック |
@@ -21,6 +21,8 @@
 | Build | 本番ビルド成立 | `npm run build` | ブロック |
 | Secret scan（例:gitleaks） | 鍵漏洩防止 | `docker compose run --rm gitleaks` | ブロック |
 | Dependency vuln scan（例:OSV） | 既知脆弱性検出 | `docker compose run --rm osv-scanner` | 原則ブロック（例外は期限付きで許可） |
+
+> ※1 `DEV_RULES §5`（コンテナ前提）に従い、npm/node 関連コマンドは `docker compose run --rm <service>` 経由で実行すること（例: `docker compose run --rm frontend npm run lint`）。表中の `npm run xxx` / `npm test` はコンテナ内で実行するコマンドを示す。
 
 ---
 
