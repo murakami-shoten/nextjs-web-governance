@@ -35,6 +35,21 @@ from the project's `docker-compose.yml`:
 If ANY command fails, STOP and report the error.
 Do not mark implementation as complete until all gates pass.
 
+## Step 2.5: Wireframe Compliance (conditional — DESIGN_RULES §9)
+
+If approved wireframes exist for this feature:
+
+1. Open each wireframe HTML file alongside the running implementation in the browser
+2. Compare layout structure page by page:
+   - Grid structure (column count, placement order)
+   - Element presence (navigation, form fields, card components)
+   - Left/right and top/bottom placement order
+   - Responsive behavior (SP/PC)
+3. If any deviation is found without user approval → **STOP and report**
+4. Mark wireframe compliance items in the checklist (SOW §4.4)
+
+If no approved wireframes exist, skip this step.
+
 ## Step 3: Dynamic Rule Compliance Verification
 
 1. List ALL `.md` files in `docs/governance/rules/`

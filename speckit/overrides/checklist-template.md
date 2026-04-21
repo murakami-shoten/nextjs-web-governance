@@ -99,6 +99,17 @@
 - [ ] Error prevention prioritized over error recovery
 - [ ] Mobile-responsive design implemented
 
+### Wireframe Compliance (DESIGN_RULES §9 — conditional)
+
+*Skip this section if no approved wireframes exist for this feature.*
+
+- [ ] Each page compared side-by-side with approved wireframe
+- [ ] Grid structure matches (column count, placement order)
+- [ ] All specified elements present (navigation, form fields, card structure)
+- [ ] Left/right and top/bottom placement order matches
+- [ ] Responsive behavior matches (SP/PC)
+- [ ] Any deviations documented and user-approved
+
 ## Quality Gates (ALL MUST PASS)
 
 - [ ] `docker compose run --rm <service> npm run lint`

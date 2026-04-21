@@ -242,6 +242,7 @@ Examples of foundational tasks (adjust based on your project):
   - Cross-check all Must requirements from requirements.md against implementation
 -->
 - [ ] TXXX Run quality gates (lint, typecheck, format, test, build, secret scan, vuln scan)
+- [ ] TXXX [CONDITIONAL] Wireframe compliance check — compare each page with approved WF (DESIGN_RULES §9, SOW §4.4)
 - [ ] TXXX Execute /speckit.checklist for governance compliance verification
 - [ ] TXXX Verify all Must requirements from requirements.md are implemented
 - [ ] TXXX Run quickstart.md validation
