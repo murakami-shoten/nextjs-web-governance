@@ -141,6 +141,7 @@
 
 | Category | Requirement | Target | Must/Should |
 |---|---|---|---|
+| Locale | Target region, language, timezone | Per HEARING_SHEET §1.1 locale section | Must |
 | Security | CSP / Security headers applied | Per SECURITY_RULES.md | Must |
 | Performance | Core Web Vitals in Good range | LCP < 2.5s, CLS < 0.1, INP < 200ms | Must |
 | SEO | Meta tags, sitemap, structured data | Per SEO_RULES.md | Must |

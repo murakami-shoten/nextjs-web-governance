@@ -54,6 +54,17 @@
 - [ ] Unit tests exist for business logic, API Route Handlers, shared utils
 - [ ] Test files colocated with source files (e.g., `route.test.ts` next to `route.ts`)
 - [ ] Tests are hermetic (external deps mocked)
+- [ ] External service test strategy documented in requirements/SOW (mock vs real, per §2.9)
+
+### Date/Locale (§2.10)
+- [ ] ISO 8601 raw strings are NOT displayed in user-facing UI
+- [ ] Date formatting uses shared utility (e.g., `format-date.ts`), not inline conversion
+- [ ] Timezone conversion matches hearing agreement (JST fixed / user local / N/A)
+
+### Data Seeding (§10.2)
+- [ ] Seed scripts exist for required data sources (DB / CMS / external services)
+- [ ] Seed scripts executed via `docker compose run --rm <service>` (not host npm)
+- [ ] Seed scripts are environment-aware (prevent accidental production seeding)
 
 ### Git (§3)
 - [ ] Commit messages follow Conventional Commits format
@@ -98,6 +109,8 @@
 - [ ] Consistency in UI patterns (ISO 9241 / Nielsen's heuristics)
 - [ ] Error prevention prioritized over error recovery
 - [ ] Mobile-responsive design implemented
+- [ ] Fallback images configured for components with optional image fields (§8.1)
+- [ ] [CONDITIONAL] Intro animation follows §7.4 guidelines (FOUC prevention, bot bypass, reduced-motion)
 
 ### Wireframe Compliance (DESIGN_RULES §9 — conditional)
 

@@ -99,6 +99,8 @@ UI/UX design MUST follow ISO 9241 and Nielsen's heuristics. Accessibility (WCAG 
 8. **Feature-First structure** — `src/features/<domain>/` for domain-shared logic; route-specific components colocated in `app/[route]/_components/` (ARCHITECTURE_RULES §2.2)
 9. **No `any` type** — TypeScript `strict: true`; justify exceptions with comments (DEV_RULES §2.1)
 10. **Unit tests required** — Business logic, API Route Handlers, shared utils, security code (DEV_RULES §2.9)
+11. **Test-first for APIs** — API Route Handlers and security code SHOULD be developed test-first; external service calls MUST be mocked unless real-communication testing is agreed in requirements (DEV_RULES §2.9)
+12. **No raw ISO dates in UI** — Always use shared format-date utility; never display `2026-04-22T...Z` to users (DEV_RULES §2.10)
 
 ## Development Workflow
 
