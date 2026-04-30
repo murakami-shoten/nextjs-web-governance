@@ -1,0 +1,238 @@
+# Feature Specification: [FEATURE NAME]
+
+<!--
+  HEARING GATE (HEARING_RULES.md §1):
+  この spec を作成する前に、ヒアリング深度を判定し要件を確認すること:
+  
+  ■ L1（初期構築）:
+    1. HEARING_SHEET.md の全 Must 項目が TBD（未質問）でないこと
+    2. requirements.md をこのディレクトリに作成し、ヒアリング結果を保存すること
+    3. 本 spec は requirements.md の内容に基づいて策定すること
+  
+  ■ L2（機能追加）:
+    1. FEATURE_HEARING_CHECKLIST.md の Must 項目が完了していること
+    2. requirements.md をこのディレクトリに作成し、ヒアリング結果を保存すること
+    3. 本 spec は requirements.md の内容に基づいて策定すること
+  
+  ■ L3（バグ修正）:
+    1. BUGFIX_SPEC_TEMPLATE.md §1 の項目（再現手順・重大度・影響範囲）が完了していること
+    2. requirements.md をこのディレクトリに作成し、バグ概要を保存すること
+  
+  保存先: このファイルと同階層の requirements.md
+  詳細: docs/governance/rules/HEARING_RULES.md §1.1
+-->
+
+**Feature Branch**: `[###-feature-name]`  
+**Created**: [DATE]  
+**Status**: Draft  
+**Input**: User description: "$ARGUMENTS"  
+**Requirements Document**: `requirements.md`（このディレクトリ内）
+
+## User Scenarios & Testing *(mandatory)*
+
+<!--
+  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
+  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
+  you should still have a viable MVP (Minimum Viable Product) that delivers value.
+  
+  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
+  Think of each story as a standalone slice of functionality that can be:
+  - Developed independently
+  - Tested independently
+  - Deployed independently
+  - Demonstrated to users independently
+-->
+
+### User Story 1 - [Brief Title] (Priority: P1)
+
+[Describe this user journey in plain language]
+
+**Why this priority**: [Explain the value and why it has this priority level]
+
+**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+
+**Acceptance Scenarios**:
+
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+2. **Given** [initial state], **When** [action], **Then** [expected outcome]
+
+---
+
+### User Story 2 - [Brief Title] (Priority: P2)
+
+[Describe this user journey in plain language]
+
+**Why this priority**: [Explain the value and why it has this priority level]
+
+**Independent Test**: [Describe how this can be tested independently]
+
+**Acceptance Scenarios**:
+
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+
+---
+
+### User Story 3 - [Brief Title] (Priority: P3)
+
+[Describe this user journey in plain language]
+
+**Why this priority**: [Explain the value and why it has this priority level]
+
+**Independent Test**: [Describe how this can be tested independently]
+
+**Acceptance Scenarios**:
+
+1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+
+---
+
+[Add more user stories as needed, each with an assigned priority]
+
+### Edge Cases
+
+<!--
+  ACTION REQUIRED: The content in this section represents placeholders.
+  Fill them out with the right edge cases.
+-->
+
+- What happens when [boundary condition]?
+- How does system handle [error scenario]?
+
+## Requirements *(mandatory)*
+
+<!--
+  ACTION REQUIRED: Fill out functional requirements.
+  
+  EARS Notation Guide (docs/governance/requirements/REQUIREMENTS_TEMPLATE.md §2.5):
+  Use EARS (Easy Approach to Requirements Syntax) for requirements involving
+  conditional logic, error handling, or user interactions.
+  
+  Patterns:
+  - Event-driven:  WHEN [event] THE SYSTEM SHALL [action]
+  - Conditional:   IF [precondition], WHEN [event] THE SYSTEM SHALL [action]
+  - Negative:      WHEN [invalid input/error] THE SYSTEM SHALL [error handling]
+  
+  Use EARS for: conditional logic, error handling, user interaction flows, state transitions.
+  Use plain language for: static content, design requirements, NFR target values.
+-->
+
+### Functional Requirements
+
+- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
+- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
+- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
+- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
+- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+
+*Example of marking unclear requirements:*
+
+- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
+- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+
+### Non-Functional Requirements *(mandatory for web projects)*
+
+<!--
+  Governance Reference:
+  - Security: docs/governance/rules/SECURITY_RULES.md (CSP, HSTS, input validation)
+  - Performance: docs/governance/rules/PERFORMANCE_RULES.md (CWV targets)
+  - SEO: docs/governance/rules/SEO_RULES.md (meta, structured data, sitemap)
+  - Accessibility: docs/governance/rules/DESIGN_RULES.md (WCAG 2.2 AA)
+-->
+
+| Category | Requirement | Target | Must/Should |
+|---|---|---|---|
+| Locale | Target region, language, timezone | Per HEARING_SHEET §1.1 locale section | Must |
+| Security | CSP / Security headers applied | Per SECURITY_RULES.md | Must |
+| Performance | Core Web Vitals in Good range | LCP < 2.5s, CLS < 0.1, INP < 200ms | Must |
+| SEO | Meta tags, sitemap, structured data | Per SEO_RULES.md | Must |
+| Accessibility | WCAG compliance level | [e.g., WCAG 2.2 AA or NEEDS CLARIFICATION] | Should |
+
+### Key Entities *(include if feature involves data)*
+
+- **[Entity 1]**: [What it represents, key attributes without implementation]
+- **[Entity 2]**: [What it represents, relationships to other entities]
+
+## Success Criteria *(mandatory)*
+
+<!--
+  ACTION REQUIRED: Define measurable success criteria.
+  These must be technology-agnostic and measurable.
+-->
+
+### Measurable Outcomes
+
+- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
+- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
+- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
+- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+
+## Assumptions
+
+<!--
+  ACTION REQUIRED: The content in this section represents placeholders.
+  Fill them out with the right assumptions based on reasonable defaults
+  chosen when the feature description did not specify certain details.
+-->
+
+- [Assumption about target users, e.g., "Users have stable internet connectivity"]
+- [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
+- [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
+- [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+
+## Design Deliverables *(conditional)*
+
+<!--
+  WIREFRAME GATE CHECK (HEARING_RULES §5 / DESIGN_RULES §8):
+  
+  This section is REQUIRED when:
+  - The user requests wireframes or UI mockups in the feature description
+  - requirements.md §4 specifies wireframe creation
+  - The feature involves new pages or significant layout changes
+  
+  If none of the above apply, write "N/A — no wireframe required" and proceed.
+  
+  When required, wireframes MUST be created and approved BEFORE implementation.
+  This is enforced in tasks.md as Phase 2.5 (Design Review Gate).
+-->
+
+### Wireframe Plan
+
+- **Required**: [Yes / No / NEEDS CLARIFICATION — check requirements.md §4]
+- **Method**: [AI-generated HTML mock / User-provided / External tool / N/A]
+- **Pages/Screens**: [List all pages requiring wireframes]
+- **Deliverable Location**: `specs/[feature]/wireframes/`
+- **Quality Criteria**: Per DESIGN_RULES.md §8
+  (SP+PC layouts, real content, error/empty states, interaction annotations)
+
+> ⚠️ If wireframes are required, Phase 3+ implementation MUST NOT begin
+> until wireframes are approved (tasks.md Phase 2.5 — Design Review Gate).
+
+## Governance Compliance *(mandatory)*
+
+<!--
+  MANDATORY RULE SCAN:
+  Before creating this specification, the AI agent MUST:
+
+  1. List ALL .md files in docs/governance/rules/
+  2. Read EACH file completely
+  3. Extract ALL mandatory requirements applicable to this feature
+  4. Reflect them in the Non-Functional Requirements table above
+     (add rows as needed — the pre-filled rows are examples, not an exhaustive list)
+
+  DO NOT skip any rule file. The directory may contain rules added after
+  this template was created. Always scan the directory for the current
+  set of rules.
+
+  Common items that are frequently missed by AI agents:
+  - Docker Compose: .env for port configuration, no hardcoded ports (DEV_RULES §4-5)
+  - Forms: CAPTCHA/spam protection is MANDATORY for all forms (SECURITY_RULES §4, EMAIL_RULES)
+  - Environment: .env.example and .env.local.example templates must exist (DEV_RULES §4)
+  - Security headers: CSP, HSTS, X-Content-Type-Options, etc. (SECURITY_RULES §2)
+
+  Additionally, read the following requirement documents:
+  - HEARING_RULES.md → confirm hearing level (L1/L2/L3) and complete before spec creation
+  - requirements.md (this directory) → use as primary input source for this spec
+-->
+
+**Rule Source**: `docs/governance/rules/*.md` — AI agent must scan ALL files in this directory and apply every applicable rule.
+
