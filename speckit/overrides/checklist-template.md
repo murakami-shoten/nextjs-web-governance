@@ -49,6 +49,9 @@
 - [ ] All npm/node commands documented as `docker compose run --rm <service>` commands
 - [ ] `docker compose up` works without host Node.js/npm installed
 - [ ] Port numbers configurable and documented
+- [ ] Project scaffolding was performed via Docker, not host npm/npx (§5.1)
+- [ ] No `npm` / `npx` / `node` commands were executed directly on the host at any point
+- [ ] Dockerfile and docker-compose.yml were created before any npm commands
 
 ### Testing (§2.9)
 - [ ] Unit tests exist for business logic, API Route Handlers, shared utils

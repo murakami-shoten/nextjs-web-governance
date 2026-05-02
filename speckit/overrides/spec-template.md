@@ -184,15 +184,27 @@
 <!--
   WIREFRAME GATE CHECK (HEARING_RULES §5 / DESIGN_RULES §8):
   
-  This section is REQUIRED when:
+  ⚠️ CRITICAL WORKFLOW IMPACT:
+  If wireframes are required (any of the conditions below), this decision
+  affects the ENTIRE downstream workflow:
+  - /speckit.tasks will include Phase 2.5 (blocking gate)
+  - /speckit.implement will create wireframes BEFORE any page implementation
+  - Phase 3+ tasks will reference approved wireframes
+  
+  Conditions for wireframe requirement:
   - The user requests wireframes or UI mockups in the feature description
   - requirements.md §4 specifies wireframe creation
   - The feature involves new pages or significant layout changes
   
   If none of the above apply, write "N/A — no wireframe required" and proceed.
   
+  The AI agent MUST NOT mark "Required: No" if the user has requested
+  wireframes or if new pages are being created. When in doubt, ask the user.
+  
   When required, wireframes MUST be created and approved BEFORE implementation.
   This is enforced in tasks.md as Phase 2.5 (Design Review Gate).
+  See DESIGN_RULES §8.4 for the mandatory sequence:
+  requirements → wireframe approval → Phase 3+ task generation → implementation
 -->
 
 ### Wireframe Plan

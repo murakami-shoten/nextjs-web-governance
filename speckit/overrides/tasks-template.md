@@ -16,8 +16,24 @@ description: "Task list template for feature implementation"
   5. Final Phase（Polish）に以下を含める:
      - /speckit.checklist 実行タスク（ガバナンス準拠チェック）
   
+  WIREFRAME PRE-CHECK (HEARING_RULES §5 / DESIGN_RULES §8.4):
+  
+  BEFORE generating tasks, check:
+  1. Does spec.md "Design Deliverables" indicate wireframes are required?
+  2. Does requirements.md specify wireframe creation?
+  
+  If YES to either:
+  - Phase 2.5 (Design Review Gate) MUST be included — DO NOT skip or delete it
+  - The order is: requirements → wireframe creation → wireframe approval → implementation
+  - If wireframes have NOT been created yet:
+    → Generate Phase 1 + Phase 2 + Phase 2.5 tasks
+    → Add BLOCKING note: "Phase 3+ tasks to be generated after wireframe approval"
+    → DO NOT generate Phase 3+ implementation tasks without approved wireframes
+  
   参照:
   - docs/governance/rules/HEARING_RULES.md §3.2（各フェーズでの適用）
+  - docs/governance/rules/HEARING_RULES.md §5（ワイヤーフレーム順序）
+  - docs/governance/rules/DESIGN_RULES.md §8.4（ワイヤーフレーム作成タイミングの強制）
   - docs/governance/rules/QUALITY_GATES.md §2（品質ゲート 7 項目）
 -->
 
@@ -62,9 +78,16 @@ description: "Task list template for feature implementation"
 ## Phase 1: Setup (Shared Infrastructure)
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
+⛔ **ALL commands in this phase MUST be executed via Docker. No host npm/npx execution.** (DEV_RULES §5, §5.1)
+
+- [ ] T001 Create Dockerfile and docker-compose.yml
+- [ ] T002 Create `.env.example` with default values (ports, service versions)
+- [ ] T003 Scaffold project via Docker (`docker run --rm -v ... node:22 npx create-next-app@latest ./` or `docker compose run --rm <service> ...`)
+- [ ] T004 Create `<webdir>/.env.local.example` with all required keys documented
+- [ ] T005 **[USER ACTION]** Request user to create `.env` and `<webdir>/.env.local` from examples (if secret keys are needed)
+- [ ] T006 Start Docker containers (`docker compose up -d`)
+- [ ] T007 [P] Install dependencies via `docker compose run --rm <service> npm ci`
+- [ ] T008 [P] Configure linting and formatting tools
 
 ---
 
@@ -102,29 +125,30 @@ Examples of foundational tasks (adjust based on your project):
 
 ---
 
-## Phase 2.5: Design Review Gate *(CONDITIONAL — skip if no wireframes in spec.md)*
+## Phase 2.5: Design Review Gate *(REQUIRED when wireframes are specified — DO NOT DELETE)*
 
 <!--
-  WIREFRAME GATE (HEARING_RULES §5 / DESIGN_RULES §8):
+  ⛔ MANDATORY GATE — DO NOT DELETE THIS PHASE if wireframes are required.
   
-  This phase is CONDITIONAL. Include it ONLY when:
-  - spec.md "Design Deliverables" section indicates wireframes are required
-  - requirements.md §4 specifies wireframe creation (AI-generated, user-provided, or external tool)
+  CHECK: If spec.md "Design Deliverables" OR requirements.md specifies wireframes,
+  this phase is MANDATORY, not optional.
   
-  If wireframes are NOT required, DELETE this entire phase and proceed to Phase 3.
+  If wireframes are NOT required (none of the conditions in DESIGN_RULES §8.4 apply),
+  DELETE this entire phase and proceed to Phase 3.
   
-  ⛔ BLOCKING GATE (when present):
-  This phase MUST be fully completed (including [APPROVAL]) BEFORE
-  ANY Phase 3+ user story implementation begins.
+  WORKFLOW ENFORCEMENT (DESIGN_RULES §8.4):
+  - Wireframes MUST be created and approved BEFORE any Phase 3+ tasks exist
+  - If wireframes are not yet created when /speckit.tasks runs:
+    → Generate Phase 2.5 tasks
+    → DO NOT generate Phase 3+ tasks
+    → Add note: "Re-run /speckit.tasks after wireframe approval to generate Phase 3+"
   
-  The AI agent executing /speckit.implement MUST:
-  1. Complete all wireframe creation tasks
-  2. STOP execution and present wireframes to the user for review
-  3. Wait for user feedback and revise as needed
-  4. Obtain explicit user approval (mark [APPROVAL] task as [x])
-  5. Update Phase 3+ tasks based on approved wireframe decisions
-  6. Only THEN proceed to Phase 3
-
+  - /speckit.implement MUST:
+    1. Complete ALL Phase 2.5 tasks first
+    2. STOP and wait for user approval
+    3. Only then proceed to Phase 3+
+    4. Reference approved wireframes when implementing each page
+  
   DO NOT skip this gate. DO NOT proceed to Phase 3 with [APPROVAL] unchecked.
 -->
 
@@ -161,6 +185,15 @@ Examples of foundational tasks (adjust based on your project):
 
 ## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
 **Goal**: [Brief description of what this story delivers]
+
+<!--
+  WIREFRAME REFERENCE (when approved wireframes exist):
+  Each implementation task in this phase MUST reference the corresponding
+  approved wireframe. The implementer MUST open the wireframe and verify
+  layout compliance during implementation (DESIGN_RULES §9).
+-->
+
+**Wireframe Reference**: `specs/[feature]/wireframes/[page].html` *(if applicable)*
 
 **Independent Test**: [How to verify this story works on its own]
 

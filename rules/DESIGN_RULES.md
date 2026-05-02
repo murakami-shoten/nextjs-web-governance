@@ -302,6 +302,20 @@ HEARING_SHEET §2 でイントロアニメーションを「実装する」と�
 | `/speckit.tasks` | tasks-template.md | **Phase 2.5 (Design Review Gate)** を条件生成。`[APPROVAL]` で Phase 3+ をブロック |
 | `/speckit.implement` | — | Phase 2.5 の `[APPROVAL]` 完了後に Phase 3+ 実装を開始 |
 
+#### ワイヤーフレーム作成タイミングの強制（Must — 合意時のみ）
+
+ワイヤーフレーム作成が**合意されている場合**、以下の順序を**厳守**すること:
+
+1. 要件定義（requirements.md）完了
+2. **ワイヤーフレーム作成・承認**（Phase 2.5）
+3. 詳細タスク生成（`/speckit.tasks` の Phase 3+ を生成）
+4. 実装開始（`/speckit.implement` の Phase 3+）
+
+> **禁止事項**（ワイヤーフレーム作成が合意されている場合）:
+> - ワイヤーフレーム未作成の状態で Phase 3+ の実装タスクを生成すること
+> - 実装と並行してワイヤーフレームを作成すること
+> - ワイヤーフレームを参照せずにページを実装すること
+
 
 
 ## 9. ワイヤーフレーム準拠検証

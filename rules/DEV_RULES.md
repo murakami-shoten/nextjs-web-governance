@@ -401,9 +401,30 @@ function SubmitButton() {
 - Docker Compose で dev/test を起動できること
 - ホストにNode/npmが無くても `docker compose up` で動くこと
 - ポートは衝突を避ける（例: 43100〜43200帯など）＋変更可能にする
-- npm/node関連コマンド（install/run/lint/test/build/npx）はホストで直接叩かず、必ず `docker compose run --rm <service>` などコンテナ経由で実行する。ホスト実行を前提にした手順やスクリプトを禁止する。
+- npm/node関連コマンド（install/run/lint/test/build/npx）はホストで直接叩かず、必ず `docker compose run --rm <service>` などコンテナ経由で実行する。**ホストに Node.js がインストールされていても、ホスト側で実行してはならない**。ホスト実行を前提にした手順やスクリプトを禁止する。
 - コンテナのライフサイクル操作も docker compose に統一する（`up -d` / `stop` / `down` / `logs` / `ps` / `exec` 等）。`docker run` 直叩きや compose を経由しない運用を前提にしない。
 - コンテナ内（Docker / CI）でのパッケージインストールは **`npm ci`** を使用すること（`npm install` 禁止）。`npm ci` は lockfile に厳密に従い、未承認の依存バージョン変更を防止する。新規パッケージの追加は開発環境で `npm install <pkg>` を実行し、lockfile の変更を PR でレビューする。
+
+### 5.1 プロジェクト初期構築のブートストラップ手順（必須）
+
+新規プロジェクトで Dockerfile / docker-compose.yml が未作成の段階でも、ホスト側で `npm` / `npx` を直接実行してはならない。本プロジェクトの前提条件は **Git + Docker Desktop のみ** であり、ホストに npm / Node.js は不要である。
+
+以下の手順で Docker 経由の開発環境を確立すること:
+
+1. **Dockerfile と docker-compose.yml を最初に作成する**
+   - プロジェクトスキャフォールドよりも先に、Docker 構成ファイルを作成する
+   - `.env.example` も同時に作成し、デフォルト値（ポート番号等）を記載する
+
+2. **プロジェクトスキャフォールドは Docker コンテナ経由で実行する**
+   - `docker-compose.yml` が未完成の段階でも、汎用 Node コンテナで実行可能:
+     ```bash
+     docker run --rm -v "$(pwd):/app" -w /app node:22 npx -y create-next-app@latest ./web
+     ```
+   - スキャフォールド完了後に Dockerfile を調整し `docker compose up` で起動する
+
+3. **以降のすべての npm/node コマンドは §5 に従い `docker compose run --rm` 経由で実行する**
+
+> **なぜホスト実行が禁止なのか**: ホストの Node.js バージョン・OS 依存・グローバルパッケージの違いにより「自分の環境では動くが他では動かない」問題が発生する。Docker を唯一の実行環境とすることで、全員が同一環境で開発・テスト・ビルドできる。
 
 ---
 
@@ -470,6 +491,54 @@ Next.js デフォルトのエラーページ（白背景に黒文字のみ）は
 | `app/global-error.tsx` | ルートレイアウト崩壊時のフォールバック | `<html>` / `<body>` を自前で含む最小限のエラーページ。トップへの導線を提供する |
 
 **根拠:** デフォルトのエラーページはブランドの一貫性を損ない、ユーザーに「壊れたサイト」という印象を与える。適切なエラーページはユーザーの離脱を防ぎ、サイト内回遊を維持する。
+
+### 8.3 Proxy（旧 Middleware）の使い方（必須）
+
+Next.js 16 で `middleware.ts` は `proxy.ts` にリネームされた。これはリクエストインターセプション層の役割を明確化するための変更である。
+
+#### 基本ルール
+
+- **`middleware.ts` は作成禁止**。`proxy.ts` を使用すること
+- `proxy.ts` は **named export `proxy`** で関数をエクスポートする（`default export` ではない）
+- `middleware.ts` と `proxy.ts` が同時に存在するとビルドエラーになる（Git 操作時に注意）
+
+```typescript
+// src/proxy.ts
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export const proxy = (request: NextRequest) => {
+  // 軽量なルーティング・リダイレクト処理のみ
+  return NextResponse.next();
+};
+```
+
+#### proxy.ts の役割（許容する処理）
+
+| 許容 | 例 |
+|---|---|
+| リダイレクト | 未認証ユーザーを `/login` へ |
+| ヘッダー付与 | CSP / セキュリティヘッダー |
+| ロケール判定 | Accept-Language による振り分け |
+| 軽量なトークン存在チェック | Cookie の有無のみ確認（検証はしない） |
+
+#### proxy.ts でやってはいけないこと
+
+| 禁止 | 理由 |
+|---|---|
+| DB アクセス | 全リクエスト（prefetch 含む）で実行されるため重い |
+| 外部 API 呼び出し | レイテンシとエラーリスクが増大 |
+| 複雑な暗号検証 | Edge Runtime の制約。DAL で行うべき |
+| 認証の唯一の防御線として使用 | CVE-2025-29927 等の脆弱性で bypass 可能。多層防御が必須 |
+
+#### 認証は多層防御（Defense in Depth）
+
+`proxy.ts` は「楽観的ゲートキーパー」として機能するが、**認証の唯一の防御線にしてはならない**。以下の多層構造を推奨:
+
+1. **proxy.ts**: トークン/Cookie の存在チェック → 未認証なら `/login` へリダイレクト（UX 改善目的）
+2. **DAL / Server Component / Route Handler**: トークンの検証・権限チェックを実施（セキュリティの実体）
+
+> **参考**: SECURITY_RULES §7.1 に Basic 認証の具体的な多層防御パターンを記載。
 
 ---
 

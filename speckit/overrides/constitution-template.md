@@ -93,14 +93,16 @@ UI/UX design MUST follow ISO 9241 and Nielsen's heuristics. Accessibility (WCAG 
 2. **Constants centralized** — `as const` arrays in `src/features/<domain>/constants.ts` (DEV_RULES §2.8)
 3. **Env fail-fast** — Validate required env vars at startup; crash if missing (DEV_RULES §4)
 4. **NO explicit NODE_ENV** — Never set `NODE_ENV` in `.env*` files; let Next.js set it automatically (DEV_RULES §4)
-5. **Docker-first** — All npm/node commands via `docker compose run --rm <service>` (DEV_RULES §5)
-6. **CSP headers mandatory** — Configure Content-Security-Policy in middleware or next.config (SECURITY_RULES)
+5. **Docker-first (STRICT)** — ⛔ NEVER run npm/node/npx directly on the host, even during project bootstrapping. Use `docker compose run --rm <service>` or `docker run --rm` with a generic node image. This is a hard prohibition, not a preference (DEV_RULES §5, §5.1)
+6. **CSP headers mandatory** — Configure Content-Security-Policy in proxy.ts or next.config (SECURITY_RULES)
 7. **Server-side validation** — Never trust client input; validate with Zod or equivalent on server (SECURITY_RULES)
 8. **Feature-First structure** — `src/features/<domain>/` for domain-shared logic; route-specific components colocated in `app/[route]/_components/` (ARCHITECTURE_RULES §2.2)
 9. **No `any` type** — TypeScript `strict: true`; justify exceptions with comments (DEV_RULES §2.1)
 10. **Unit tests required** — Business logic, API Route Handlers, shared utils, security code (DEV_RULES §2.9)
 11. **Test-first for APIs** — API Route Handlers and security code SHOULD be developed test-first; external service calls MUST be mocked unless real-communication testing is agreed in requirements (DEV_RULES §2.9)
 12. **No raw ISO dates in UI** — Always use shared format-date utility; never display `2026-04-22T...Z` to users (DEV_RULES §2.10)
+13. **Use proxy.ts, NOT middleware.ts** — Next.js 16+ uses `proxy.ts` (named export `proxy`). Never create `middleware.ts`. Auth logic must also be enforced in DAL/Server Components, not proxy alone (DEV_RULES §8.3, SECURITY_RULES §7.1)
+14. **Bootstrap via Docker** — Even for initial scaffolding (`create-next-app` etc.), use `docker run --rm -v ... node:22 npx ...`. Create Dockerfile + docker-compose.yml FIRST, then scaffold inside the container (DEV_RULES §5.1)
 
 ## Development Workflow
 
