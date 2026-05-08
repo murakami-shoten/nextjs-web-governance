@@ -1,7 +1,7 @@
 ---
 description: "NWG Governance: Gate check before plan/tasks/implement"
 scripts:
-  sh: ../../scripts/bash/governance-check.sh
+  sh: .specify/scripts/bash/governance-check.sh
 ---
 
 # NWG Governance Gate Check

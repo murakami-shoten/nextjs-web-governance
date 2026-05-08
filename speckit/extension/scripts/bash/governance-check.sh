@@ -118,7 +118,7 @@ if [ "$PHASE" = "gate-check" ]; then
       fi
 
       # --- TBD（未質問）---
-      TBD_COUNT=$(grep -c 'TBD（未質問）\|TBD (未質問)' "$REQ_FILE" 2>/dev/null || echo "0")
+      TBD_COUNT=$(grep -c 'TBD（未質問）\|TBD (未質問)' "$REQ_FILE" 2>/dev/null) || TBD_COUNT=0
       if [ "$TBD_COUNT" -gt 0 ]; then
         error "Must 項目に TBD（未質問）が ${TBD_COUNT} 件残っています (HEARING_RULES §2.2)"
         grep -n 'TBD（未質問）\|TBD (未質問)' "$REQ_FILE" 2>/dev/null || true
@@ -127,7 +127,7 @@ if [ "$PHASE" = "gate-check" ]; then
       fi
 
       # --- AI推測 ---
-      AI_COUNT=$(grep -c 'AI推測\|AI 推測\|AI推定\|AI 推定' "$REQ_FILE" 2>/dev/null || echo "0")
+      AI_COUNT=$(grep -c 'AI推測\|AI 推測\|AI推定\|AI 推定' "$REQ_FILE" 2>/dev/null) || AI_COUNT=0
       if [ "$AI_COUNT" -gt 0 ]; then
         error "AI 推測による回答が ${AI_COUNT} 件あります (HEARING_RULES §2.2 推測禁止)"
         grep -n 'AI推測\|AI 推測\|AI推定\|AI 推定' "$REQ_FILE" 2>/dev/null || true
@@ -136,7 +136,7 @@ if [ "$PHASE" = "gate-check" ]; then
       fi
 
       # --- NEEDS CLARIFICATION ---
-      NC_COUNT=$(grep -c 'NEEDS.CLARIFICATION' "$REQ_FILE" 2>/dev/null || echo "0")
+      NC_COUNT=$(grep -c 'NEEDS.CLARIFICATION' "$REQ_FILE" 2>/dev/null) || NC_COUNT=0
       if [ "$NC_COUNT" -gt 0 ]; then
         warn "未確定事項 (NEEDS CLARIFICATION) が ${NC_COUNT} 件残っています"
       fi

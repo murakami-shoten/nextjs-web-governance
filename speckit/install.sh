@@ -128,6 +128,26 @@ else
 fi
 
 # =============================================================================
+# Step 4.5: ガバナンスチェックスクリプトを .specify/scripts/bash/ に配置
+# =============================================================================
+# spec-kit の {SCRIPT} プレースホルダーは frontmatter の値を文字列置換する
+# だけでパス解決を行わないため、プロジェクトルートから有効なパスに配置する。
+SCRIPT_SRC="$INSTALL_PATH/speckit/extension/scripts/bash/governance-check.sh"
+SCRIPT_DST=".specify/scripts/bash"
+
+if [ -f "$SCRIPT_SRC" ]; then
+  mkdir -p "$SCRIPT_DST"
+  if [ -f "$SCRIPT_DST/governance-check.sh" ]; then
+    warn "$SCRIPT_DST/governance-check.sh は既に存在します。上書きします。"
+  fi
+  cp "$SCRIPT_SRC" "$SCRIPT_DST/governance-check.sh"
+  chmod +x "$SCRIPT_DST/governance-check.sh"
+  info "ガバナンスチェックスクリプトを $SCRIPT_DST/ に配置しました。"
+else
+  warn "ガバナンスチェックスクリプトが見つかりません: $SCRIPT_SRC"
+fi
+
+# =============================================================================
 # 完了メッセージ
 # =============================================================================
 echo ""
@@ -148,6 +168,7 @@ if [ "$EXT_INSTALLED" -eq 1 ]; then
 else
   echo "  ⚠️  NWG Governance Extension — 未インストール（手動: specify extension add --dev $EXTENSION_SRC）"
 fi
+echo "  ✅ .specify/scripts/bash/    — ガバナンスチェックスクリプト"
 echo ""
 echo "📋 次のステップ:"
 echo ""

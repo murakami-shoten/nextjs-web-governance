@@ -1,7 +1,7 @@
 ---
 description: "NWG Governance: Post-implementation quality gates and compliance verification"
 scripts:
-  sh: ../../scripts/bash/governance-check.sh
+  sh: .specify/scripts/bash/governance-check.sh
 ---
 
 # NWG Governance Quality Gate

@@ -1,7 +1,7 @@
 ---
 description: "NWG Governance: Pre-specify checks — hearing level detection + dynamic rule scan"
 scripts:
-  sh: ../../scripts/bash/governance-check.sh
+  sh: .specify/scripts/bash/governance-check.sh
 ---
 
 # NWG Governance Pre-Check
